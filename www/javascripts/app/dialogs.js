@@ -13,7 +13,7 @@
                 var modalInstance = $modal.open({
                     templateUrl: 'myModalContent.html',
                     controller: 'ModalController',
-                    size: 'lg',
+                    //size: 'lg',
                     resolve: {
                         items: function() {
                             return $scope.items;
