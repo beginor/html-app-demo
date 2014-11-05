@@ -9,7 +9,7 @@ requirejs.config({
         'angular-animate': 'libs/angularjs/1.3.0/angular-animate',
         'angular-route': 'libs/angularjs/1.3.0/angular-route',
         'angular-resource': 'libs/angularjs/1.3.0/angular-resource',
-        'angularjs-ui-bootstrap': 'libs/angularjs-ui-bootstrap/0.11.2/ui-bootstrap-tpls'
+        'angular-ui-bootstrap': 'libs/angularjs-ui-bootstrap/0.11.2/ui-bootstrap-tpls'
     },
     shim: {
         'bootstrap': { deps: ['jquery'] },
@@ -17,11 +17,11 @@ requirejs.config({
         'angular-animate': { deps: ['jquery', 'angular'] },
         'angular-route': { deps: ['jquery', 'angular'] },
         'angular-resource': { deps: ['jquery', 'angular'] },
-        'angularjs-ui-bootstrap': { deps: [ 'jquery', 'bootstrap', 'angular' ] }
+        'angular-ui-bootstrap': { deps: [ 'jquery', 'bootstrap', 'angular' ] }
     }
 });
 
-require(['jquery', 'angular', 'app'],
+require(['jquery', 'angular', 'angular-ui-bootstrap', 'app'],
     function(app) {
         angular.bootstrap(document, ['app']);
     }
