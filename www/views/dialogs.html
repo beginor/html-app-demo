@@ -1,24 +1,26 @@
 ﻿<h2 class="sub-header">{{greeting}}<h2>
 
-<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-    Launch demo modal
+<button class="btn btn-primary btn-lg" ng-click="showDialog()">
+    Show Dialog
 </button>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">标题：</h4>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-danger">保存更改</button>
-            </div>
-        </div>
+<p>You have selecte : {{selected}} 
+
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">提示：</h4>
     </div>
-</div>
+    <div class="modal-body">
+        <ul>
+            <li ng-repeat="item in items">
+                <a ng-click="selected.item = item">{{ item }}</a>
+            </li>
+        </ul>
+        Selected: <b>{{ selected.item }}</b>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">确定</button>
+        <button class="btn btn-warning" ng-click="cancel()">取消</button>
+    </div>
+</script>
