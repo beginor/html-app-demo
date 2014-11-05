@@ -15,7 +15,7 @@ namespace OwinApiHost {
 
             appBuilder.Use<ConsoleLogMiddleware>();
 
-            appBuilder.Use<SimpleStaticFileMiddleWare>(System.IO.Path.Combine(Environment.CurrentDirectory, @"../../www"));
+            appBuilder.Use<SimpleStaticFileMiddleWare>(System.IO.Path.Combine(Environment.CurrentDirectory, @"../www"));
 
             var startup = new WebApi.Startup();
             startup.Configuration(appBuilder);
