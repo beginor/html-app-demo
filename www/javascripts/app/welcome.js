@@ -1,14 +1,12 @@
-define('app/welcome', ['angular'],
-    function(angular) {
-        'use strict';
+define('app/welcome', ['angular'], function(angular) {
+    'use strict';
 
-        var welcome = angular.module('welcome', []);
+    var welcome = angular.module('welcome', []);
 
-        welcome.controller('WelcomeController', ['$scope',
-            function($scope) {
-                $scope.greeting = 'Welcome to angular js app.';
-            }
-        ]);
+    welcome.controller('WelcomeController', ['$scope',
+        function($scope) {
+            $scope.greeting = 'Welcome to angular js app.';
+        }
+    ]);
 
-    }
-);
+});
