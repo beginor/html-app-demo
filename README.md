@@ -12,4 +12,4 @@ Usage:
 
 3. Run project OWinApiHost
 
-4. Then open your browser, goto: http://127.0.0.1:/8888/index.html
+4. Then open your browser, goto: http://127.0.0.1:8888/index.html
