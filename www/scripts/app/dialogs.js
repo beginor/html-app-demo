@@ -1,9 +1,7 @@
-﻿(function(angular) {
+define('app/dialogs', ['app'], function(app) {
     'use strict';
 
-    var dialogs = angular.module('dialogs', ['ui.bootstrap']);
-
-    dialogs.controller('DialogsController', ['$scope', '$modal', '$log',
+    app.controller('DialogsController', ['$scope', '$modal', '$log',
         //
         function ($scope, $modal, $log) {
             $scope.greeting = 'Dialog Demo';
@@ -37,7 +35,7 @@
         }
     ]);
 
-    dialogs.controller('ModalController', ['$scope', '$modalInstance', 'items',
+    app.controller('ModalController', ['$scope', '$modalInstance', 'items',
         function($scope, $modalInstance, items) {
             $scope.items = items;
             $scope.selected = {
@@ -53,4 +51,5 @@
             };
         }
     ]);
-}(window.angular));
+
+});

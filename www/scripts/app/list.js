@@ -1,16 +1,14 @@
-﻿(function(angular) {
+﻿define('app/list', ['app'], function(app) {
     'use strict';
 
-    var list = angular.module('list', ['ngResource', 'ngRoute', 'ui.bootstrap']);
-
-    list.factory('categories', ['$resource',
+    app.factory('categories', ['$resource',
         function($resource) {
             return $resource('/api/categories/:id', null, {
             });
         }
     ]);
 
-    list.controller('ListController', ['$scope', '$modal', 'categories',
+    app.controller('ListController', ['$scope', '$modal', 'categories',
         //
         function ($scope, $modal, categories) {
             $scope.greeting = 'Category list';
@@ -49,7 +47,7 @@
         }
     ]);
 
-    list.controller('DeleteConfirmController', ['$scope', '$modalInstance',
+    app.controller('DeleteConfirmController', ['$scope', '$modalInstance',
         function($scope, $modalInstance) {
             $scope.ok = function() {
                 $modalInstance.close('ok');
@@ -59,4 +57,4 @@
             }
         }
     ]);
-}(window.angular));
+});
