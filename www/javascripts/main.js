@@ -21,7 +21,7 @@ requirejs.config({
     }
 });
 
-require(['jquery', 'angular', 'angular-ui-bootstrap', 'app'],
+require(['app'],
     function(app) {
         angular.bootstrap(document, ['app']);
     }

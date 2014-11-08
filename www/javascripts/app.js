@@ -1,18 +1,38 @@
-﻿define('app', ['angular', 'angular-route', 'angular-resource', , 'app/welcome', 'app/dialogs', 'app/list', 'app/user', 'app/help'], function(angular) {
+﻿define('app', ['routes', 'loader', 'jquery', 'angular', 'angular-route', 'angular-resource', 'angular-ui-bootstrap'], function (config, loader) {
     'use strict';
 
-    var app = angular.module('app', ['ngRoute', 'welcome', 'dialogs', 'list', 'user', 'help']);
+    var app = angular.module('app', ['ngRoute', 'ngResource', 'ui.bootstrap']);
 
     app.config([
         '$routeProvider',
-        function ($rootProvider) {
-            $rootProvider
-                .when('/welcome', { templateUrl: 'views/welcome.html', controller: 'WelcomeController' })
-                .when('/dialogs', { templateUrl: 'views/dialogs.html', controller: 'DialogsController' })
-                .when('/list', { templateUrl: 'views/list.html', controller: 'ListController' })
-                .when('/user', { templateUrl: 'views/user.html', controller: 'UserController' })
-                .when('/help', { templateUrl: 'views/help.html', controller: 'HelpController' })
-                .otherwise({ redirectTo: '/welcome' });
+        '$locationProvider',
+        '$controllerProvider',
+        '$compileProvider',
+        '$filterProvider',
+        '$provide',
+        function ($routeProvider, $locationProvider, $controllerProvider, $compileProvider, $filterProvider, $provide) {
+            app.controller = $controllerProvider.register;
+            app.directive = $compileProvider.directive;
+            app.filter = $filterProvider.register;
+            app.factory = $provide.factory;
+            app.service = $provide.service;
+
+            //$locationProvider.html5Mode(true);
+
+            if (config.routes != undefined) {
+                angular.forEach(config.routes, function(route, path) {
+                    $routeProvider.when(path, {
+                        templateUrl: route.templateUrl,
+                        resolve: loader(route.dependencies)
+                    });
+                });
+            }
+
+            if (config.defaultRoutePath != undefined) {
+                $routeProvider.otherwise({ redirectTo: config.defaultRoutePath });
+            }
         }
     ]);
+
+    return app;
 });

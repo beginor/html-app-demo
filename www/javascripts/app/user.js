@@ -1,9 +1,7 @@
-define('app/user', ['angular'], function(angular) {
+define('app/user', ['app'], function(app) {
     'use strict';
 
-    var user = angular.module('user', []);
-
-    user.controller('UserController', ['$scope',
+    app.controller('UserController', ['$scope',
         function($scope) {
             $scope.greeting = 'User Info';
         }

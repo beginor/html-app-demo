@@ -1,9 +1,7 @@
-define('app/welcome', ['angular'], function(angular) {
+define(['app'], function(app) {
     'use strict';
 
-    var welcome = angular.module('welcome', []);
-
-    welcome.controller('WelcomeController', ['$scope',
+    app.controller('WelcomeController', ['$scope',
         function($scope) {
             $scope.greeting = 'Welcome to angular js app.';
         }
