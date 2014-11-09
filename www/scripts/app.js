@@ -24,13 +24,14 @@
                 angular.forEach(config.routes, function(route, path) {
                     $routeProvider.when(path, {
                         templateUrl: route.templateUrl,
+                        controller: route.controller,
                         resolve: loader(route.dependencies)
                     });
                 });
             }
 
-            if (config.defaultRoutePath != undefined) {
-                $routeProvider.otherwise({ redirectTo: config.defaultRoutePath });
+            if (config.defaultRoute != undefined) {
+                $routeProvider.otherwise({ redirectTo: config.defaultRoute });
             }
         }
     ]);
