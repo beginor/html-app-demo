@@ -1,13 +1,13 @@
 ﻿define('app/list', ['app'], function(app) {
     'use strict';
 
-    app.factory('categories', categories);
+    app.registerFactory('categories', categories);
     categories.$inject = ['$resource'];
 
-    app.controller('ListController', ListController);
+    app.registerController('ListController', ListController);
     ListController.$inject = ['$scope', '$modal', 'categories'];
 
-    app.controller('DeleteConfirmController', DeleteConfirmController);
+    app.registerController('DeleteConfirmController', DeleteConfirmController);
     DeleteConfirmController.$inject = ['$scope', '$modalInstance'];
 
     function categories($resource) {

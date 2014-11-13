@@ -9,11 +9,11 @@
     return app;
 
     function configure($routeProvider, $locationProvider, $controllerProvider, $compileProvider, $filterProvider, $provide) {
-        app.controller = $controllerProvider.register;
-        app.directive = $compileProvider.directive;
-        app.filter = $filterProvider.register;
-        app.factory = $provide.factory;
-        app.service = $provide.service;
+        app.registerController = $controllerProvider.register;
+        app.registerDirective = $compileProvider.directive;
+        app.registerFilter = $filterProvider.register;
+        app.registerFactory = $provide.factory;
+        app.registerService = $provide.service;
 
         $locationProvider.html5Mode(false);
         //$locationProvider.hashPrefix("!");

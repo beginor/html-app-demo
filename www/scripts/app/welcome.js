@@ -1,7 +1,7 @@
 define(['app'], function(app) {
     'use strict';
 
-    app.controller('WelcomeController', WelcomeController);
+    app.registerController('WelcomeController', WelcomeController);
 
     WelcomeController.$inject = ['$scope'];
     

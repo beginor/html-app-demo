@@ -1,11 +1,11 @@
 define('app/dialogs', ['app'], function(app) {
     'use strict';
 
-    app.controller('DialogsController', DialogsController);
+    app.registerController('DialogsController', DialogsController);
 
     DialogsController.$inject = ['$scope', '$modal', '$log'];
 
-    app.controller('ModalController', ModalController);
+    app.registerController('ModalController', ModalController);
 
     ModalController.$inject = ['$scope', '$modalInstance', 'items'];
 

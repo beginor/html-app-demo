@@ -1,7 +1,7 @@
 define('app/user', ['app'], function(app) {
     'use strict';
 
-    app.controller('UserController', UserController);
+    app.registerController('UserController', UserController);
 
     UserController.$inject = ['$scope'];
     

@@ -1,7 +1,7 @@
 define('app/help', ['app'], function(app) {
     'use strict';
 
-    app.controller('HelpController', HelpController);
+    app.registerController('HelpController', HelpController);
     HelpController.$inject = ['$scope'];
 
     function HelpController($scope) {
