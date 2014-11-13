@@ -12,16 +12,13 @@
     <![endif]-->
     <link href="styles/print.css" media="print" rel="stylesheet" type="text/css" />
 </head>
-<body>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-include="'includes/header.html'">
-    </nav>
-    <div class="container-fluid">
-        <div class="row">
-            <div id="left-panel-nav" class="col-sm-3 col-md-2 sidebar" ng-include="'includes/left-panel.html'"></div>
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-view>
-            </div>
-        </div>
+<body class="">
+    <header id="header" ng-include="'includes/header.html'"></header>
+    <aside id="left-panel"><span ng-include="'includes/left-panel.html'"></span></aside>
+    <div id="main" role="mian">
+        <div id="content" ng-view class="view-animate"></div>
     </div>
+    <footer ng-include="'includes/footer.html'"></footer>
     <script type="text/javascript" src="scripts/libs/requirejs/2.1.15/require.js" data-main="scripts/main.js"></script>
 </body>
 </html>

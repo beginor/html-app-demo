@@ -2,75 +2,40 @@
 @import "compass/reset";
 @import "compass/utilities";
 */
-/* line 3, ../sass/app.scss */
-body {
-  padding-top: 50px;
+/* line 9, ../sass/app.scss */
+#header {
+  font-color: #333;
 }
-
-/* line 7, ../sass/app.scss */
-.sub-header {
-  padding-bottom: 10px;
-  border-bottom: 1px solid #333;
-}
-
 /* line 12, ../sass/app.scss */
-.navbar-fixed-top {
-  border: 0;
+#header .brand {
+  font-size: 20px;
+  height: 50px;
 }
 
-/* line 16, ../sass/app.scss */
-.sidebar {
-  display: none;
-}
-@media (min-width: 768px) {
-  /* line 16, ../sass/app.scss */
-  .sidebar {
-    position: fixed;
-    top: 51px;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    display: block;
-    padding: 20px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    background-color: #f5f5f5;
-    border-right: 1px solid #eee;
-  }
+/* line 18, ../sass/app.scss */
+#left-panel {
+  left: 0;
+  width: 220px;
+  z-index: 1000;
+  display: block;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #f5f5f5;
+  border-right: 1px solid #eee;
 }
 
-/* line 34, ../sass/app.scss */
-.nav-sidebar {
-  margin-right: -21px;
-  /* 20px padding + 1px border */
-  margin-bottom: 20px;
-  margin-left: -20px;
-}
-/* line 40, ../sass/app.scss */
-.nav-sidebar > li > a {
-  padding-right: 20px;
-  padding-left: 20px;
-}
-/* line 47, ../sass/app.scss */
-.nav-sidebar > .active > a, .nav-sidebar > .active > a:hover, .nav-sidebar > .active > a:focus {
-  /*
-  color: #fff;
-  background-color: #428bca;
-  */
-}
-
-/* line 56, ../sass/app.scss */
-.main {
+/* line 31, ../sass/app.scss */
+#main {
   padding: 20px;
 }
 @media (min-width: 768px) {
-  /* line 56, ../sass/app.scss */
-  .main {
+  /* line 31, ../sass/app.scss */
+  #main {
     padding-right: 40px;
     padding-left: 40px;
   }
 }
-/* line 64, ../sass/app.scss */
-.main .page-header {
+/* line 39, ../sass/app.scss */
+#main .page-header {
   margin-top: 0;
 }
