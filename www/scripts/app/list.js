@@ -1,60 +1,72 @@
 ﻿define('app/list', ['app'], function(app) {
     'use strict';
 
-    app.factory('categories', ['$resource',
-        function($resource) {
-            return $resource('/api/categories/:id', null, {
+    app.factory('categories', categories);
+    categories.$inject = ['$resource'];
+
+    app.controller('ListController', ListController);
+    ListController.$inject = ['$scope', '$modal', 'categories'];
+
+    app.controller('DeleteConfirmController', DeleteConfirmController);
+    DeleteConfirmController.$inject = ['$scope', '$modalInstance'];
+
+    function categories($resource) {
+        return $resource('/api/categories/:id', null, {});
+    }
+
+    function ListController($scope, $modal, cat) {
+        $scope.greeting = 'Category list';
+        $scope.data = [];
+
+        $scope.loadData = loadData;
+        $scope.editData = editData;
+        $scope.deleteData = deleteData;
+
+        $scope.$on('$destroy', onDestroy);
+
+        loadData();
+
+        function loadData() {
+            $scope.data = [];
+            cat.query(function (data) {
+                $scope.data = data;
             });
         }
-    ]);
 
-    app.controller('ListController', ['$scope', '$modal', 'categories',
-        //
-        function ($scope, $modal, categories) {
-            $scope.greeting = 'Category list';
+        function editData(id) {
+            console.log(id);
+        }
 
-            $scope.loadData = function() {
-                $scope.data = [];
-                categories.query(function (data) {
-                    $scope.data = data;
-                });
-            };
-
-            $scope.loadData();
-
-            $scope.edit = function (id) {
-                console.log(id);
-            };
-
-            $scope.delete = function(id) {
-                var modalInstance = $modal.open({
-                    templateUrl: 'delete-confirm.html',
-                    controller: 'DeleteConfirmController',
-                    size: 'sm'
-                });
-                modalInstance.result.then(
-                    function() {
-                        categories.delete({ id: id }, function() {
-                            $scope.loadData();
-                        });
-                    }
-                );
-            }
-            //
-            $scope.$on('$destroy', function(evt) {
-                console.log('list controller destroy.');
+        function deleteData(id) {
+            var modalInstance = $modal.open({
+                templateUrl: 'delete-confirm.html',
+                controller: 'DeleteConfirmController',
+                size: 'sm'
             });
+            modalInstance.result.then(
+                function() {
+                    cat.delete({ id: id }, function() {
+                        loadData();
+                    });
+                }
+            );
         }
-    ]);
 
-    app.controller('DeleteConfirmController', ['$scope', '$modalInstance',
-        function($scope, $modalInstance) {
-            $scope.ok = function() {
-                $modalInstance.close('ok');
-            };
-            $scope.cancel = function() {
-                $modalInstance.dismiss('cancel');
-            }
+        function onDestroy(evt) {
+            console.log('list controller destroy.');
         }
-    ]);
+    }
+
+    function DeleteConfirmController($scope, $modalInstance) {
+        $scope.ok = ok;
+        $scope.cancel = cancel;
+
+        function ok() {
+            $modalInstance.close('ok');
+        }
+
+        function cancel() {
+            $modalInstance.dismiss('cancel');
+        }
+    }
 });
