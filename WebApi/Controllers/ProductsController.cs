@@ -3,11 +3,19 @@ using WebApi.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Castle.Core.Logging;
 
 namespace WebApi.Controllers {
 
     [RoutePrefix("api/products")]
     public class ProductsController : ApiController {
+
+        private ILogger logger = NullLogger.Instance;
+
+        public ILogger Logger {
+            get { return logger; }
+            set { logger = value; }
+        }
 
         private static readonly IList<Product> Data;
 
@@ -82,6 +90,7 @@ namespace WebApi.Controllers {
 
         [Route("~/api/categories/{categoryId}/products")]
         public IHttpActionResult GetByCategory(int categoryId) {
+            logger.DebugFormat("GET: api/categories/{0}/products", categoryId);
             var query = Data.Where(p => p.CategoryId == categoryId);
             if (query.Any()) {
                 return Ok(query.ToList());

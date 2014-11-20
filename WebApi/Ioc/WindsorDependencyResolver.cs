@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http.Dependencies;
+using Castle.Core.Logging;
 using Castle.Windsor;
 
 namespace WebApi.Ioc {
@@ -8,6 +10,12 @@ namespace WebApi.Ioc {
     public class WindsorDependencyScope : IDependencyScope {
 
         private IWindsorContainer container;
+        private ILogger logger = NullLogger.Instance;
+
+        public ILogger Logger {
+            get { return logger; }
+            set { logger = value; }
+        }
 
         protected IWindsorContainer Container {
             get {
@@ -27,24 +35,28 @@ namespace WebApi.Ioc {
         }
 
         public object GetService(Type serviceType) {
+            Logger.DebugFormat("GetService of type {0}", serviceType);
+            object service = null;
             try {
-                return container.Resolve(serviceType);
+                service = container.Resolve(serviceType);
             }
             catch (Exception ex) {
-                return null;
+                Logger.Error(string.Format("Can not resolve {0}", serviceType), ex);
             }
+            return service;
         }
 
         public IEnumerable<object> GetServices(Type serviceType) {
+            Logger.DebugFormat("Get All Service of type {0}", serviceType);
             var services = new List<Object>();
             try {
-                var resolved = container.ResolveAll(serviceType);
+                var resolved = container.ResolveAll(serviceType).Cast<object>();
                 foreach (var service in resolved) {
                     services.Add(service);
                 }
             }
             catch (Exception ex) {
-
+                Logger.Error(string.Format("Can not resolve all {0}", serviceType), ex);
             }
             return services;
         }
