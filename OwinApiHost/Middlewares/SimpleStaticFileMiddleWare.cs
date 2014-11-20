@@ -16,6 +16,9 @@ namespace OwinApiHost.Middlewares {
 
         public override Task Invoke(IOwinContext context) {
             var requestPath = context.Request.Path.ToString();
+            if (requestPath.EndsWith("/")) {
+                requestPath += "index.html";
+            }
             var filePath = Path.Combine(rootDirectory, requestPath.Substring(1));
             if (File.Exists(filePath)) {
                 var response = context.Response;
