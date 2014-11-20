@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwinApiHost", "OwinApiHost\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{766B7CA4-DF5A-4735-B689-12CAD0B07CE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website", "www\Website.csproj", "{BEC8F5AD-3157-473D-96E9-70505C1CC592}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "www", "www\www.csproj", "{BEC8F5AD-3157-473D-96E9-70505C1CC592}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
