@@ -48,17 +48,7 @@ namespace WebApi.Ioc {
 
         public IEnumerable<object> GetServices(Type serviceType) {
             Logger.DebugFormat("Get All Service of type {0}", serviceType);
-            var services = new List<Object>();
-            try {
-                var resolved = container.ResolveAll(serviceType).Cast<object>();
-                foreach (var service in resolved) {
-                    services.Add(service);
-                }
-            }
-            catch (Exception ex) {
-                Logger.Error(string.Format("Can not resolve all {0}", serviceType), ex);
-            }
-            return services;
+            return container.ResolveAll(serviceType).Cast<object>();
         }
 
     }
