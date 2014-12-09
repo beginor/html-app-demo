@@ -1,0 +1,26 @@
+{
+    "name": "html-app-demo",
+    "version": "0.0.0",
+    "homepage": "https://github.com/beginor/html-app-demo",
+    "description": "html demo app with angular + asp.net webapi + owin",
+    "main": "index.html",
+    "keywords": [
+        "angular",
+        "asp.net",
+        "webapi",
+        "owin",
+        "nowin"
+    ],
+    "authors": [
+        "beginor"
+    ],
+    "license": "MIT",
+    "private": true,
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ]
+}
