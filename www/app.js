@@ -1,4 +1,4 @@
-﻿define(['app.routes', 'app.loader', 'jquery', 'angular', 'angular-route', 'angular-resource', 'angular-ui-bootstrap'], function (config, loader) {
+﻿define(['app.routes', 'app.loader', 'angular', 'angular-route', 'angular-resource', 'angular-bootstrap'], function (config, loader) {
     'use strict';
 
     var app = angular.module('app', ['ngRoute', 'ngResource', 'ui.bootstrap']);
