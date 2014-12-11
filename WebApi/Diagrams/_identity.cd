@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Microsoft.AspNet.Identity.EntityFramework.RoleStore&lt;TRole, TKey, TUserRole&gt;" Collapsed="true">
+    <Position X="9.75" Y="6.5" Width="2.75" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Microsoft.AspNet.Identity.EntityFramework.RoleStore&lt;TRole&gt;" Collapsed="true">
+    <Position X="9.75" Y="8.5" Width="2.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Microsoft.AspNet.Identity.EntityFramework.UserStore&lt;TUser, TRole, TKey, TUserLogin, TUserRole, TUserClaim&gt;" Collapsed="true">
+    <Position X="1" Y="9.5" Width="4.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Microsoft.AspNet.Identity.EntityFramework.UserStore&lt;TUser&gt;" Collapsed="true">
+    <Position X="0.75" Y="10.75" Width="5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Microsoft.AspNet.Identity.EntityFramework.IdentityUserRole&lt;TKey&gt;" Collapsed="true">
+    <Position X="6.75" Y="6.5" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Microsoft.AspNet.Identity.EntityFramework.IdentityUserRole" Collapsed="true">
+    <Position X="6.75" Y="7.75" Width="1.75" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Microsoft.AspNet.Identity.EntityFramework.IdentityDbContext&lt;TUser, TRole, TKey, TUserLogin, TUserRole, TUserClaim&gt;" Collapsed="true">
+    <Position X="4.5" Y="0.5" Width="5.25" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Microsoft.AspNet.Identity.EntityFramework.IdentityDbContext" Collapsed="true">
+    <Position X="1.25" Y="2" Width="5.75" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Microsoft.AspNet.Identity.EntityFramework.IdentityDbContext&lt;TUser&gt;" Collapsed="true">
+    <Position X="7.75" Y="2" Width="5.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Microsoft.AspNet.Identity.EntityFramework.IdentityRole&lt;TKey, TUserRole&gt;" Collapsed="true">
+    <Position X="6.75" Y="3.5" Width="2.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Microsoft.AspNet.Identity.EntityFramework.IdentityRole" Collapsed="true">
+    <Position X="6.75" Y="4.75" Width="2.25" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Microsoft.AspNet.Identity.EntityFramework.IdentityUser&lt;TKey, TLogin, TRole, TClaim&gt;" Collapsed="true">
+    <Position X="1.5" Y="6.5" Width="3" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Microsoft.AspNet.Identity.EntityFramework.IdentityUser" Collapsed="true">
+    <Position X="0.75" Y="7.75" Width="4.25" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Microsoft.AspNet.Identity.EntityFramework.IdentityUserClaim&lt;TKey&gt;" Collapsed="true">
+    <Position X="3.75" Y="3.5" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Microsoft.AspNet.Identity.EntityFramework.IdentityUserClaim" Collapsed="true">
+    <Position X="3.75" Y="4.75" Width="1.75" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Microsoft.AspNet.Identity.EntityFramework.IdentityUserLogin&lt;TKey&gt;" Collapsed="true">
+    <Position X="0.75" Y="3.5" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Microsoft.AspNet.Identity.EntityFramework.IdentityUserLogin" Collapsed="true">
+    <Position X="0.75" Y="4.75" Width="1.75" />
+    <TypeIdentifier />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
