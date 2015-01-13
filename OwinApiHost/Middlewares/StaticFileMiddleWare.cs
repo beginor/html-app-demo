@@ -1,42 +1,61 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Owin;
 using System.IO;
 
 namespace OwinApiHost.Middlewares {
 
-    public class SimpleStaticFileMiddleWare : OwinMiddleware {
+    public class StaticFileMiddleWare : OwinMiddleware {
 
-        private string rootDirectory;
+        private readonly StaticFileMiddleWareOptions options;
 
-        public SimpleStaticFileMiddleWare(OwinMiddleware next, string rootDirectory)
+        public StaticFileMiddleWare(OwinMiddleware next, StaticFileMiddleWareOptions options)
             : base(next) {
-            this.rootDirectory = rootDirectory;
+            this.options = options;
         }
 
         public override Task Invoke(IOwinContext context) {
             var requestPath = context.Request.Path.ToString();
             if (requestPath.EndsWith("/")) {
-                requestPath += "index.html";
+                requestPath += options.DefaultFile;
             }
-            var filePath = Path.Combine(rootDirectory, requestPath.Substring(1));
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, options.RootDirectory, requestPath.Substring(1));
             if (File.Exists(filePath)) {
                 var response = context.Response;
                 var fileInfo = new FileInfo(filePath);
                 response.ContentLength = fileInfo.Length;
-                response.ContentType = GetContentType(fileInfo.Extension);
+                response.ContentType = options.GetMimeType(fileInfo.Extension);
                 var buff = File.ReadAllBytes(filePath);
                 return response.WriteAsync(buff);
             }
-            return base.Next.Invoke(context);
+            return Next.Invoke(context);
         }
 
-        private static string GetContentType(string extension) {
+    }
+
+    public class StaticFileMiddleWareOptions {
+
+        protected IDictionary<string, string> MimeTypes;
+
+        public string RootDirectory { get; }
+
+        public string DefaultFile { get; }
+
+        public string DefaultMimeType { get; }
+
+        public StaticFileMiddleWareOptions(string rootDirectory, string defaultFile, string defaultMimeType) {
+            RootDirectory = rootDirectory;
+            DefaultFile = defaultFile;
+            DefaultMimeType = defaultMimeType;
+        }
+
+        public virtual string GetMimeType(string extension) {
             var ext = extension;
             if (ext.StartsWith(".")) {
                 ext = ext.Substring(1);
             }
-            var contentType = "";
+            string contentType;
             switch (ext) {
             case "html":
                 contentType = "text/html";
@@ -66,10 +85,11 @@ namespace OwinApiHost.Middlewares {
                 contentType = "application/x-font-woff";
                 break;
             default:
-                contentType = "octet-stream";
+                contentType = DefaultMimeType;//"application/octet-stream";
                 break;
             }
             return contentType;
         }
+
     }
 }

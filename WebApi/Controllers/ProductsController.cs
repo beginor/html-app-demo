@@ -10,15 +10,10 @@ namespace WebApi.Controllers {
     [RoutePrefix("api/products")]
     public class ProductsController : ApiController {
 
-        private ILogger logger = NullLogger.Instance;
-
-        public ILogger Logger {
-            get { return logger; }
-            set { logger = value; }
-        }
+        public ILogger Logger { get; set; } = NullLogger.Instance;
 
         private static readonly IList<Product> Data;
-
+        
         static ProductsController() {
             Data = new List<Product> {
                 new Product { ProductId =  1, ProductName =  "Chai", SupplierId =  1, CategoryId =  1, QuantityPerUnit =  "10 boxes x 20 bags", UnitPrice =  18, UnitsInStock =  39, UnitsOnOrder =  0, ReorderLevel =  10, Discontinued =  false }, 
@@ -90,7 +85,7 @@ namespace WebApi.Controllers {
 
         [Route("~/api/categories/{categoryId}/products")]
         public IHttpActionResult GetByCategory(int categoryId) {
-            logger.DebugFormat("GET: api/categories/{0}/products", categoryId);
+            Logger.DebugFormat("GET: api/categories/{0}/products", categoryId);
             var query = Data.Where(p => p.CategoryId == categoryId);
             if (query.Any()) {
                 return Ok(query.ToList());

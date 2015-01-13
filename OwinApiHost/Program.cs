@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
+using Castle.Windsor;
 using Microsoft.Owin.Builder;
+using Nowin;
 using Owin;
 using Owin.Windsor;
 using OwinApiHost.Middlewares;
+using WebApi;
 
 namespace OwinApiHost {
 
@@ -12,31 +16,33 @@ namespace OwinApiHost {
 
         static void Main(string[] args) {
             var app = new AppBuilder();
-            Nowin.OwinServerFactory.Initialize(app.Properties);
+            OwinServerFactory.Initialize(app.Properties);
 
             app.UseWindsorContainer("windsor.config");
 
-            var logMiddleware = app.GetWindsorContainer().Resolve<ConsoleLogMiddleware>();
+            var container = app.GetWindsorContainer();
+            var logMiddleware = container.Resolve<ConsoleLogMiddleware>();
             app.Use(logMiddleware);
 
-            app.Use<SimpleStaticFileMiddleWare>(System.IO.Path.Combine(Environment.CurrentDirectory, @"../www"));
+            var options = container.Resolve<StaticFileMiddleWareOptions>();
+            app.Use<StaticFileMiddleWare>(options);
 
-            var startup = new WebApi.Startup();
+            var startup = new Startup();
             startup.Configuration(app);
 
-            var builder = new Nowin.ServerBuilder();
+            var builder = new ServerBuilder();
             const string ip = "127.0.0.1";
             const int port = 8888;
-            builder.SetAddress(System.Net.IPAddress.Parse(ip)).SetPort(port)
+            builder.SetAddress(IPAddress.Parse(ip)).SetPort(port)
                 .SetOwinApp(app.Build())
-                .SetOwinCapabilities((IDictionary<string, object>)app.Properties[Nowin.OwinKeys.ServerCapabilitiesKey]);
+                .SetOwinCapabilities((IDictionary<string, object>)app.Properties[OwinKeys.ServerCapabilitiesKey]);
 
             using (var server = builder.Build()) {
 
-                var serverRef = new WeakReference<Nowin.INowinServer>(server);
+                var serverRef = new WeakReference<INowinServer>(server);
 
                 Task.Run(() => {
-                    Nowin.INowinServer nowinServer;
+                    INowinServer nowinServer;
                     if (serverRef.TryGetTarget(out nowinServer)) {
                         nowinServer.Start();
                     }
@@ -47,6 +53,7 @@ namespace OwinApiHost {
 
                 Console.ReadLine();
             }
+
         }
     }
 }
