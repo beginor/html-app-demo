@@ -16,7 +16,8 @@ namespace OwinApiHost {
 
             app.UseWindsorContainer("windsor.config");
 
-            app.Use<ConsoleLogMiddleware>();
+            var logMiddleware = app.GetWindsorContainer().Resolve<ConsoleLogMiddleware>();
+            app.Use(logMiddleware);
 
             app.Use<SimpleStaticFileMiddleWare>(System.IO.Path.Combine(Environment.CurrentDirectory, @"../www"));
 
