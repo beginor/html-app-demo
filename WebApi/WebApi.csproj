@@ -96,11 +96,9 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="IdentityConfig.cs" />
-    <Compile Include="Ioc\WindsorDependencyResolver.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Category.cs" />
-    <Compile Include="Owin.Windsor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Models\Product.cs" />
@@ -112,7 +110,16 @@
     <None Include="packages.config" />
     <None Include="Diagrams\_identity.cd" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Owin.Windsor\Owin.Windsor.csproj">
+      <Project>{b91a4bdd-dc39-4ce5-b647-3173ac76fa26}</Project>
+      <Name>Owin.Windsor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebApi.Windsor\WebApi.Windsor.csproj">
+      <Project>{2020f8d2-a3c4-411d-915f-1de771e67e6a}</Project>
+      <Name>WebApi.Windsor</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

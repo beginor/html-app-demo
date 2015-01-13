@@ -122,6 +122,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Owin.Windsor\Owin.Windsor.csproj">
+      <Project>{b91a4bdd-dc39-4ce5-b647-3173ac76fa26}</Project>
+      <Name>Owin.Windsor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebApi\WebApi.csproj">
       <Project>{766B7CA4-DF5A-4735-B689-12CAD0B07CE5}</Project>
       <Name>WebApi</Name>

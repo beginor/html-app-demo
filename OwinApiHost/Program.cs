@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Owin.Builder;
 using Owin;
+using Owin.Windsor;
 using OwinApiHost.Middlewares;
 
 namespace OwinApiHost {
@@ -10,22 +11,24 @@ namespace OwinApiHost {
     class Program {
 
         static void Main(string[] args) {
-            var appBuilder = new AppBuilder();
-            Nowin.OwinServerFactory.Initialize(appBuilder.Properties);
+            var app = new AppBuilder();
+            Nowin.OwinServerFactory.Initialize(app.Properties);
 
-            appBuilder.Use<ConsoleLogMiddleware>();
+            app.UseWindsorContainer("windsor.config");
 
-            appBuilder.Use<SimpleStaticFileMiddleWare>(System.IO.Path.Combine(Environment.CurrentDirectory, @"../www"));
+            app.Use<ConsoleLogMiddleware>();
+
+            app.Use<SimpleStaticFileMiddleWare>(System.IO.Path.Combine(Environment.CurrentDirectory, @"../www"));
 
             var startup = new WebApi.Startup();
-            startup.Configuration(appBuilder);
+            startup.Configuration(app);
 
             var builder = new Nowin.ServerBuilder();
             const string ip = "127.0.0.1";
             const int port = 8888;
             builder.SetAddress(System.Net.IPAddress.Parse(ip)).SetPort(port)
-                .SetOwinApp(appBuilder.Build())
-                .SetOwinCapabilities((IDictionary<string, object>)appBuilder.Properties[Nowin.OwinKeys.ServerCapabilitiesKey]);
+                .SetOwinApp(app.Build())
+                .SetOwinCapabilities((IDictionary<string, object>)app.Properties[Nowin.OwinKeys.ServerCapabilitiesKey]);
 
             using (var server = builder.Build()) {
 

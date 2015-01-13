@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "www", "www\www.csproj", "{BEC8F5AD-3157-473D-96E9-70505C1CC592}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Windsor", "WebApi.Windsor\WebApi.Windsor.csproj", "{2020F8D2-A3C4-411D-915F-1DE771E67E6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Owin.Windsor", "Owin.Windsor\Owin.Windsor.csproj", "{B91A4BDD-DC39-4CE5-B647-3173AC76FA26}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{BEC8F5AD-3157-473D-96E9-70505C1CC592}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEC8F5AD-3157-473D-96E9-70505C1CC592}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEC8F5AD-3157-473D-96E9-70505C1CC592}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2020F8D2-A3C4-411D-915F-1DE771E67E6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2020F8D2-A3C4-411D-915F-1DE771E67E6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2020F8D2-A3C4-411D-915F-1DE771E67E6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2020F8D2-A3C4-411D-915F-1DE771E67E6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B91A4BDD-DC39-4CE5-B647-3173AC76FA26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B91A4BDD-DC39-4CE5-B647-3173AC76FA26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B91A4BDD-DC39-4CE5-B647-3173AC76FA26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B91A4BDD-DC39-4CE5-B647-3173AC76FA26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

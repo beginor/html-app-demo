@@ -4,15 +4,18 @@ using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Microsoft.Owin;
 using Owin;
-using WebApi.Ioc;
+using Owin.Windsor;
+using WebApi;
+using WebApi.Windsor;
 
-[assembly: OwinStartup(typeof(WebApi.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
 
 namespace WebApi {
 
     public class Startup {
 
         public void Configuration(IAppBuilder app) {
+
             var config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute(
@@ -20,17 +23,7 @@ namespace WebApi {
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-
-            var container = new WindsorContainer();
-            var installer = Castle.Windsor.Installer.Configuration.FromXmlFile("windsor.config");
-            container.Install(installer);
-            container.Register(
-                Component.For<IWindsorContainer>().Instance(container),
-                Component.For<IDependencyResolver>().ImplementedBy<WindsorDependencyResolver>()
-            );
-            //container.Register(Castle.MicroKernel.Registration.
-            var resolver = container.Resolve<IDependencyResolver>();
-            config.DependencyResolver = resolver;
+            config.UseWindsorContainer(app.GetWindsorContainer());
 
             app.UseWebApi(config);
         }

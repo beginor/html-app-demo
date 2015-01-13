@@ -5,11 +5,11 @@ using System.Web.Http.Dependencies;
 using Castle.Core.Logging;
 using Castle.Windsor;
 
-namespace WebApi.Ioc {
+namespace WebApi.Windsor {
 
     public class WindsorDependencyScope : IDependencyScope {
 
-        private IWindsorContainer container;
+        private readonly IWindsorContainer container;
         private ILogger logger = NullLogger.Instance;
 
         public ILogger Logger {
@@ -52,17 +52,4 @@ namespace WebApi.Ioc {
         }
 
     }
-
-    public class WindsorDependencyResolver : WindsorDependencyScope, IDependencyResolver {
-
-        public WindsorDependencyResolver(IWindsorContainer container) : base(container) { }
-
-        public IDependencyScope BeginScope() {
-            var childContainer = new WindsorContainer();
-            Container.AddChildContainer(childContainer);
-            return new WindsorDependencyScope(childContainer);
-        }
-
-    }
-
 }

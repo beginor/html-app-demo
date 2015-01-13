@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Web.Http;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
 
-namespace Owin {
+namespace Owin.Windsor {
 
     public static class WindsorExtensions {
 
@@ -33,13 +32,13 @@ namespace Owin {
                 throw new ArgumentNullException("container");
             }
 
-            var rootContainer = GetRootContainer(appBuilder);
+            var rootContainer = GetWindsorContainer(appBuilder);
             rootContainer.AddChildContainer(container);
 
             return appBuilder;
         }
 
-        private static IWindsorContainer GetRootContainer(IAppBuilder app) {
+        public static IWindsorContainer GetWindsorContainer(this IAppBuilder app) {
             if (!app.Properties.ContainsKey(AppWindsorContainer)) {
                 lock(typeof(WindsorExtensions)) {
                     if (!app.Properties.ContainsKey(AppWindsorContainer)) {
@@ -49,10 +48,6 @@ namespace Owin {
                 }
             }
             return (IWindsorContainer)app.Properties[AppWindsorContainer];
-        }
-
-        public static IAppBuilder UseWebApiWithWindsor(this IAppBuilder appBuilder, HttpConfiguration config) {
-            return appBuilder;
         }
 
     }
