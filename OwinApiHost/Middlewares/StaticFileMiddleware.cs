@@ -6,35 +6,45 @@ using System.IO;
 
 namespace OwinApiHost.Middlewares {
 
-    public class StaticFileMiddleWare : OwinMiddleware {
+    using AppFunc = Func<IDictionary<string, object>, Task>;
 
-        private readonly StaticFileMiddleWareOptions options;
+    public class StaticFileMiddleware {
 
-        public StaticFileMiddleWare(OwinMiddleware next, StaticFileMiddleWareOptions options)
-            : base(next) {
+        private AppFunc next;
+        private readonly StaticFileMiddlewareOptions options;
+
+        public void Initialize(AppFunc next) {
+            this.next = next;
+        }
+
+        public StaticFileMiddleware(StaticFileMiddlewareOptions options) {
             this.options = options;
         }
 
-        public override Task Invoke(IOwinContext context) {
-            var requestPath = context.Request.Path.ToString();
+        public Task Invoke(IDictionary<string, object> env) {
+            var key = Nowin.OwinKeys.ResponseBody;
+            var requestPath = (string)env["owin.RequestPath"];
             if (requestPath.EndsWith("/")) {
                 requestPath += options.DefaultFile;
             }
             var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, options.RootDirectory, requestPath.Substring(1));
             if (File.Exists(filePath)) {
-                var response = context.Response;
+                var response = (Stream)env["owin.ResponseBody"];
                 var fileInfo = new FileInfo(filePath);
-                response.ContentLength = fileInfo.Length;
-                response.ContentType = options.GetMimeType(fileInfo.Extension);
+                //response.ContentLength = fileInfo.Length;
+                //response.ContentType = options.GetMimeType(fileInfo.Extension);
                 var buff = File.ReadAllBytes(filePath);
-                return response.WriteAsync(buff);
+                var headers = (IDictionary<string, string[]>)env["owin.ResponseHeaders"];
+                headers["Content-Type"] = new[] {options.GetMimeType(fileInfo.Extension)};
+                headers["Content-Length"] = new[] {buff.Length.ToString()};
+                return response.WriteAsync(buff, 0, buff.Length);
             }
-            return Next.Invoke(context);
+            return next.Invoke(env);
         }
 
     }
 
-    public class StaticFileMiddleWareOptions {
+    public class StaticFileMiddlewareOptions {
 
         protected IDictionary<string, string> MimeTypes;
 
@@ -44,7 +54,7 @@ namespace OwinApiHost.Middlewares {
 
         public string DefaultMimeType { get; }
 
-        public StaticFileMiddleWareOptions(string rootDirectory, string defaultFile, string defaultMimeType) {
+        public StaticFileMiddlewareOptions(string rootDirectory, string defaultFile, string defaultMimeType) {
             RootDirectory = rootDirectory;
             DefaultFile = defaultFile;
             DefaultMimeType = defaultMimeType;

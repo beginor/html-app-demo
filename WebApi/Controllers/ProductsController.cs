@@ -13,7 +13,7 @@ namespace WebApi.Controllers {
         public ILogger Logger { get; set; } = NullLogger.Instance;
 
         private static readonly IList<Product> Data;
-        
+
         static ProductsController() {
             Data = new List<Product> {
                 new Product { ProductId =  1, ProductName =  "Chai", SupplierId =  1, CategoryId =  1, QuantityPerUnit =  "10 boxes x 20 bags", UnitPrice =  18, UnitsInStock =  39, UnitsOnOrder =  0, ReorderLevel =  10, Discontinued =  false }, 
