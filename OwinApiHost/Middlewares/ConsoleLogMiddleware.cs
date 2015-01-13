@@ -1,19 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Owin;
 
 namespace OwinApiHost.Middlewares {
 
-    public class ConsoleLogMiddleware : OwinMiddleware {
+    using AppFunc = Func<IDictionary<string, object>, Task>;
 
-        public ConsoleLogMiddleware(OwinMiddleware next)
-            : base(next) {
+    public class ConsoleLogMiddleware {
+
+        private AppFunc next;
+
+        public void Initialize(AppFunc next) {
+            this.next = next;
         }
 
-        public async override Task Invoke(IOwinContext context) {
-            Console.WriteLine("{0} {1} {2}", DateTime.Now, context.Request.Method, context.Request.Uri);
-            await Next.Invoke(context);
-            Console.WriteLine("Return HTTP status: {0}", context.Response.StatusCode);
+        public async Task Invoke(IDictionary<string, object> env) {
+            Console.WriteLine("{0} {1} {2}", DateTime.Now, env["owin.RequestMethod"], env["owin.RequestPath"]);
+            await next.Invoke(env);
+            Console.WriteLine("Return HTTP status: {0}", env["owin.ResponseStatusCode"]);
         }
 
     }
