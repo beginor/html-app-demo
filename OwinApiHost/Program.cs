@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using Castle.Windsor;
 using Microsoft.Owin.Builder;
 using Nowin;
-using Owin;
 using Owin.Windsor;
 using OwinApiHost.Middlewares;
 using WebApi;
