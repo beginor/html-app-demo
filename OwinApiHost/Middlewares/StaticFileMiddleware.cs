@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.Owin;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace OwinApiHost.Middlewares {
 
@@ -22,22 +21,19 @@ namespace OwinApiHost.Middlewares {
         }
 
         public Task Invoke(IDictionary<string, object> env) {
-            var key = Nowin.OwinKeys.ResponseBody;
             var requestPath = (string)env["owin.RequestPath"];
             if (requestPath.EndsWith("/")) {
                 requestPath += options.DefaultFile;
             }
             var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, options.RootDirectory, requestPath.Substring(1));
             if (File.Exists(filePath)) {
-                var response = (Stream)env["owin.ResponseBody"];
+                var responseBody = (Stream)env["owin.ResponseBody"];
                 var fileInfo = new FileInfo(filePath);
-                //response.ContentLength = fileInfo.Length;
-                //response.ContentType = options.GetMimeType(fileInfo.Extension);
                 var buff = File.ReadAllBytes(filePath);
                 var headers = (IDictionary<string, string[]>)env["owin.ResponseHeaders"];
-                headers["Content-Type"] = new[] {options.GetMimeType(fileInfo.Extension)};
-                headers["Content-Length"] = new[] {buff.Length.ToString()};
-                return response.WriteAsync(buff, 0, buff.Length);
+                headers["Content-Type"] = new[] { options.GetMimeType(fileInfo.Extension) };
+                headers["Content-Length"] = new[] { buff.Length.ToString() };
+                return responseBody.WriteAsync(buff, 0, buff.Length);
             }
             return next.Invoke(env);
         }
@@ -45,8 +41,6 @@ namespace OwinApiHost.Middlewares {
     }
 
     public class StaticFileMiddlewareOptions {
-
-        protected IDictionary<string, string> MimeTypes;
 
         public string RootDirectory { get; }
 
