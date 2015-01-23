@@ -23,11 +23,9 @@ namespace OwinApiHost.Middlewares {
 
         public Task Invoke(IDictionary<string, object> env) {
             var requestPath = (string)env["owin.RequestPath"];
-            if (requestPath.EndsWith("/")) {
-                requestPath += options.DefaultFile;
-            }
+            requestPath = CheckRequestPath(requestPath);
 
-            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, options.RootDirectory, requestPath.Substring(1));
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, options.RootDirectory, requestPath);
             var fileInfo = new FileInfo(filePath);
             var ticks = fileInfo.LastWriteTimeUtc.Ticks;
             //
@@ -58,6 +56,15 @@ namespace OwinApiHost.Middlewares {
             return next.Invoke(env);
         }
 
+        private string CheckRequestPath(string requestPath) {
+            if (requestPath.StartsWith("/")) {
+                requestPath = requestPath.Substring(1);
+            }
+            if (requestPath.EndsWith("/")) {
+                requestPath += options.DefaultFile;
+            }
+            return requestPath;
+        }
     }
 
     public class StaticFileMiddlewareOptions {
@@ -68,10 +75,13 @@ namespace OwinApiHost.Middlewares {
 
         public string DefaultMimeType { get; private set; }
 
-        public StaticFileMiddlewareOptions(string rootDirectory, string defaultFile, string defaultMimeType) {
+        public bool EnableETag { get; private set; }
+
+        public StaticFileMiddlewareOptions(string rootDirectory, string defaultFile, string defaultMimeType = "application/octet-stream", bool enableETag = true) {
             RootDirectory = rootDirectory;
             DefaultFile = defaultFile;
             DefaultMimeType = defaultMimeType;
+            EnableETag = enableETag;
         }
 
         public virtual string GetMimeType(string extension) {
