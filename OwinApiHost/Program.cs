@@ -22,8 +22,11 @@ namespace OwinApiHost {
             var logMiddleware = container.Resolve<ConsoleLogMiddleware>();
             app.Use(logMiddleware);
 
-            var fileMIddleware = container.Resolve<StaticFileMiddleware>();
-            app.Use(fileMIddleware);
+			var options = container.Resolve<StaticFileMiddlewareOptions>();
+			if (options.MimeTypeProvider == null) {
+				options.MimeTypeProvider = new MimeTypeProvider();
+			}
+			app.Use(typeof(StaticFileMiddleware), options);
 
             var startup = new Startup();
             startup.Configuration(app);

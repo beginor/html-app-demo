@@ -10,9 +10,17 @@ namespace WebApi.Controllers {
     [RoutePrefix("api/products")]
     public class ProductsController : ApiController {
 
-        public ILogger Logger { get; set; } = NullLogger.Instance;
+		ILogger logger = NullLogger.Instance;
+		private static readonly IList<Product> Data;
 
-        private static readonly IList<Product> Data;
+        public ILogger Logger {
+			get {
+				return logger;
+			}
+			set {
+				logger = value;
+			}
+		}
 
         static ProductsController() {
             Data = new List<Product> {
