@@ -7,6 +7,7 @@ using Nowin;
 using Owin.Windsor;
 using OwinApiHost.Middlewares;
 using WebApi;
+using Beginor.Owin.StaticFile;
 
 namespace OwinApiHost {
 
@@ -22,11 +23,8 @@ namespace OwinApiHost {
             var logMiddleware = container.Resolve<ConsoleLogMiddleware>();
             app.Use(logMiddleware);
 
-			var options = container.Resolve<StaticFileMiddlewareOptions>();
-			if (options.MimeTypeProvider == null) {
-				options.MimeTypeProvider = new MimeTypeProvider();
-			}
-			app.Use(typeof(StaticFileMiddleware), options);
+            var options = container.Resolve<StaticFileMiddlewareOptions>();
+            app.UseStaticFile(options);
 
             var startup = new Startup();
             startup.Configuration(app);
