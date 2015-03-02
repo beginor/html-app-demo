@@ -5,7 +5,11 @@
     categories.$inject = ['$resource'];
 
     function categories($resource) {
-        return $resource('/api/categories/:id', null, {});
+        return $resource('/api/categories/:id', null, {
+            update: {
+                method: 'PUT'
+            }
+        });
     }
 
 });

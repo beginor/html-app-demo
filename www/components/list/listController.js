@@ -1,4 +1,4 @@
-﻿define(['app', 'components/list/listFactory', 'shared/confirm/confirmController'], function (app) {
+﻿define(['app', 'components/list/listFactory', 'shared/confirm/confirmController', 'components/list/listEditController'], function (app) {
     'use strict';
 
     app.registerController('ListController', ListController);
@@ -11,10 +11,25 @@
         $scope.loadData = loadData;
         $scope.editData = editData;
         $scope.deleteData = deleteData;
+        $scope.addNew = addNew;
 
         $scope.$on('$destroy', onDestroy);
 
         loadData();
+
+        function addNew() {
+            var modalInstance = $modal.open({
+                templateUrl: 'components/list/listEditView.html',
+                controller: 'ListEditController',
+                size: 'sm',
+                resolve: {
+                    id: function () { return 0; }
+                }
+            });
+            modalInstance.result.then(function () {
+                loadData();
+            });
+        }
 
         function loadData() {
             $scope.data = [];
@@ -24,7 +39,18 @@
         }
 
         function editData(id) {
-            console.log(id);
+            var modalInstance = $modal.open({
+                templateUrl: 'components/list/listEditView.html',
+                controller: 'ListEditController',
+                size: 'sm',
+                resolve: {
+                    id: function () { return id; }
+                }
+            });
+            modalInstance.result.then(function() {
+                loadData();
+            });
+            //console.log(id);
         }
 
         function deleteData(id) {

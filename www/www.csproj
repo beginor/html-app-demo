@@ -46,6 +46,8 @@
     <Content Include="app.loader.js" />
     <Content Include="app.main.js" />
     <Content Include="app.routes.js" />
+    <Content Include="components\list\listEditController.js" />
+    <Content Include="components\list\listEditView.html" />
     <Content Include="resources\bower.json" />
     <Content Include="resources\bower_components\angular-animate\angular-animate.js" />
     <Content Include="resources\bower_components\angular-animate\angular-animate.min.js" />
@@ -193,6 +195,7 @@
     <Content Include="shared\confirm\confirmView.html" />
     <Content Include="shared\header.html" />
     <Content Include="shared\left-panel.html" />
+    <Content Include="test.html" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="resources\sass\app.scss" />
