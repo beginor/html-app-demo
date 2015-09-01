@@ -4,10 +4,12 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Owin.Builder;
 using Nowin;
-using Owin.Windsor;
 using OwinApiHost.Middlewares;
 using WebApi;
 using Beginor.Owin.StaticFile;
+using Beginor.Owin.Windsor;
+using Beginor.Owin.Security.Aes;
+using Microsoft.Owin.Logging;
 
 namespace OwinApiHost {
 
@@ -20,8 +22,15 @@ namespace OwinApiHost {
             app.UseWindsorContainer("windsor.config");
 
             var container = app.GetWindsorContainer();
+
+            var loggerFactory = container.Resolve<ILoggerFactory>();
+            app.SetLoggerFactory(loggerFactory);
+
+            app.UseAesDataProtectionProvider();
+
             var logMiddleware = container.Resolve<ConsoleLogMiddleware>();
             app.Use(logMiddleware);
+
 
             var options = container.Resolve<StaticFileMiddlewareOptions>();
             app.UseStaticFile(options);

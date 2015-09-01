@@ -1,12 +1,11 @@
 ﻿using System.Web.Http;
-using System.Web.Http.Dependencies;
-using Castle.MicroKernel.Registration;
-using Castle.Windsor;
 using Microsoft.Owin;
 using Owin;
-using Owin.Windsor;
 using WebApi;
-using WebApi.Windsor;
+using Beginor.Owin.Windsor;
+using Beginor.Owin.WebApi.Windsor;
+using Microsoft.Owin.Security.Cookies;
+using Newtonsoft.Json.Serialization;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -16,6 +15,10 @@ namespace WebApi {
 
         public void Configuration(IAppBuilder app) {
 
+            app.UseCookieAuthentication(new CookieAuthenticationOptions {
+
+            });
+
             var config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute(
@@ -23,6 +26,8 @@ namespace WebApi {
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             config.UseWindsorContainer(app.GetWindsorContainer());
 
             app.UseWebApi(config);
