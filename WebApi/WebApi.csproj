@@ -112,6 +112,7 @@
   <ItemGroup>
     <Compile Include="ApplicationSignInManager.cs" />
     <Compile Include="ApplicationUserManager.cs" />
+    <Compile Include="ApplicationUserStore.cs" />
     <Compile Include="Argument.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\UsersController.cs" />

@@ -4,19 +4,9 @@ using Owin;
 using WebApi;
 using Beginor.Owin.Windsor;
 using Beginor.Owin.WebApi.Windsor;
-using Castle.MicroKernel.Registration;
 using Castle.Windsor;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.DataProtection;
 using Newtonsoft.Json.Serialization;
-using NHibernate;
-using NHibernate.AspNet.Identity;
-using NHibernate.AspNet.Identity.Helpers;
-using NHibernate.Mapping.ByCode;
-using NHibernate.Tool.hbm2ddl;
-using WebApi.Models;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -25,7 +15,7 @@ namespace WebApi {
     public class Startup {
 
         public void Configuration(IAppBuilder app) {
-            //ConfigIdentity(app);
+            ConfigIdentity(app);
             ConfigAuth(app);
             ConfigWebApi(app);
         }
@@ -37,7 +27,9 @@ namespace WebApi {
         }
 
         private static void ConfigIdentity(IAppBuilder app) {
-            app.CreatePerOwinContext(app.GetWindsorContainer);
+            app.CreatePerOwinContext<IWindsorContainer>((opt, context) => app.GetWindsorContainer(), (opt, c) => {
+                // Do not dispose windsor container.
+            });
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
         }

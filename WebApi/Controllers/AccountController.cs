@@ -13,17 +13,13 @@ namespace WebApi.Controllers {
     [RoutePrefix("api/account")]
     public class AccountController : ApiController {
 
-        private readonly ApplicationUserManager userManager;
-        private readonly ApplicationSignInManager signInManager;
+        private ApplicationUserManager UserManager => Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager) {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
-        }
+        private ApplicationSignInManager SignInManager => Request.GetOwinContext().Get<ApplicationSignInManager>();
 
         [Route("")]
         public async Task<IHttpActionResult> GetUser() {
-            var user = await userManager.FindByNameAsync(User.Identity.Name);
+            var user = await UserManager.FindByNameAsync(User.Identity.Name);
             IHttpActionResult result = Ok(user);
             return result;
         }
@@ -39,7 +35,7 @@ namespace WebApi.Controllers {
                 Email = model.Email,
                 UserName = model.Email
             };
-            var identityResult = await userManager.CreateAsync(user);
+            var identityResult = await UserManager.CreateAsync(user);
 
             IHttpActionResult result;
 
@@ -63,7 +59,7 @@ namespace WebApi.Controllers {
                 return new InvalidModelStateResult(ModelState, this);
             }
 
-            var signInStatus = await signInManager.PasswordSignInAsync(
+            var signInStatus = await SignInManager.PasswordSignInAsync(
                 model.Email,
                 model.Password,
                 model.RememberMe,
@@ -74,7 +70,7 @@ namespace WebApi.Controllers {
 
             switch (signInStatus) {
                 case SignInStatus.Success:
-                    var user = await userManager.FindByEmailAsync(model.Email);
+                    var user = await UserManager.FindByEmailAsync(model.Email);
                     result = Ok(user);
                     break;
                 case SignInStatus.LockedOut:

@@ -57,13 +57,6 @@ namespace WebApi {
                     new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
 
-            if (!registerToWindsor) {
-                container.Register(
-                    Component.For<ApplicationUserManager>().UsingFactoryMethod(() => manager)
-                );
-                registerToWindsor = true;
-            }
-
             return manager;
         }
 
