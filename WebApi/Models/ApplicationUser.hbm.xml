@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:nhibernate-mapping-2.2">
+    <class name="NHibernate.AspNet.Identity.IdentityUser, NHibernate.AspNet.Identity" table="aspnet_user">
+        <id name="Id" type="string" column="Id">
+            <generator class="uuid.hex">
+                <param name="format">D</param>
+            </generator>
+        </id>
+        <property name="AccessFailedCount" />
+        <property name="Email" />
+        <property name="EmailConfirmed" />
+        <property name="LockoutEnabled" />
+        <property name="LockoutEndDateUtc" />
+        <property name="PasswordHash" />
+        <property name="PhoneNumber" />
+        <property name="PhoneNumberConfirmed" />
+        <property name="TwoFactorEnabled" />
+        <property name="UserName" length="255" not-null="true" unique="true" />
+        <property name="SecurityStamp" />
+        <bag name="Roles" table="aspnet_user_role">
+            <key column="UserId" />
+            <many-to-many class="NHibernate.AspNet.Identity.IdentityRole, NHibernate.AspNet.Identity" column="RoleId" />
+        </bag>
+        <bag name="Claims" cascade="all,delete-orphan">
+            <key column="UserId" update="false" />
+            <one-to-many class="NHibernate.AspNet.Identity.IdentityUserClaim, NHibernate.AspNet.Identity" />
+        </bag>
+        <set name="Logins" table="aspnet_user_login" cascade="all,delete-orphan">
+            <key column="UserId" />
+            <composite-element class="NHibernate.AspNet.Identity.IdentityUserLogin, NHibernate.AspNet.Identity">
+                <property name="LoginProvider" />
+                <property name="ProviderKey" />
+            </composite-element>
+        </set>
+    </class>
+    <class name="NHibernate.AspNet.Identity.IdentityRole, NHibernate.AspNet.Identity" table="aspnet_role">
+        <id name="Id" type="String">
+            <generator class="uuid.hex">
+                <param name="format">D</param>
+            </generator>
+        </id>
+        <property name="Name" length="255" not-null="true" unique="true" />
+        <bag name="Users" table="aspnet_user_role">
+            <key column="RoleId" />
+            <many-to-many class="NHibernate.AspNet.Identity.IdentityUser, NHibernate.AspNet.Identity" column="UserId" />
+        </bag>
+    </class>
+    <class name="NHibernate.AspNet.Identity.IdentityUserClaim, NHibernate.AspNet.Identity" table="aspnet_user_role_claim">
+        <id name="Id" type="Int32">
+            <generator class="identity" />
+        </id>
+        <property name="ClaimType" />
+        <property name="ClaimValue" />
+        <many-to-one name="User" column="UserId" />
+    </class>
+    <joined-subclass name="WebApi.Models.ApplicationUser, WebApi" extends="NHibernate.AspNet.Identity.IdentityUser, NHibernate.AspNet.Identity" table="application_user">
+        <key column="UserId" />
+    </joined-subclass>
+    <joined-subclass name="WebApi.Models.ApplicationRole, WebApi" extends="NHibernate.AspNet.Identity.IdentityRole, NHibernate.AspNet.Identity" table="application_role">
+        <key column="RoleId" />
+        <property name="Description" column="Description" type="string" length="256" />
+    </joined-subclass>
+</hibernate-mapping>

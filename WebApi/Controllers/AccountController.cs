@@ -21,7 +21,6 @@ namespace WebApi.Controllers {
             this.signInManager = signInManager;
         }
 
-
         [Route("")]
         public async Task<IHttpActionResult> GetUser() {
             var user = await userManager.FindByNameAsync(User.Identity.Name);
@@ -36,8 +35,7 @@ namespace WebApi.Controllers {
                 return new InvalidModelStateResult(ModelState, this);
             }
 
-            var user = new ApplicationUser
-            {
+            var user = new ApplicationUser {
                 Email = model.Email,
                 UserName = model.Email
             };
@@ -75,28 +73,26 @@ namespace WebApi.Controllers {
             IHttpActionResult result;
 
             switch (signInStatus) {
-            case SignInStatus.Success:
-                var user = await userManager.FindByEmailAsync(model.Email);
-                result = Ok(user);
-                break;
-            case SignInStatus.LockedOut:
-                result = ResponseMessage(new HttpResponseMessage(HttpStatusCode.Forbidden)
-                {
-                    ReasonPhrase = "User is locked out.",
-                    Content = new StringContent("User is locked out.")
-                });
-                break;
-            case SignInStatus.RequiresVerification:
-                result = ResponseMessage(new HttpResponseMessage(HttpStatusCode.Forbidden)
-                {
-                    ReasonPhrase = "User is not verified.",
-                    Content = new StringContent("User is not verified.")
-                });
-                break;
-            //case SignInStatus.Failure:
-            default:
-                result = BadRequest("login failed, try again.");
-                break;
+                case SignInStatus.Success:
+                    var user = await userManager.FindByEmailAsync(model.Email);
+                    result = Ok(user);
+                    break;
+                case SignInStatus.LockedOut:
+                    result = ResponseMessage(new HttpResponseMessage(HttpStatusCode.Forbidden) {
+                        ReasonPhrase = "User is locked out.",
+                        Content = new StringContent("User is locked out.")
+                    });
+                    break;
+                case SignInStatus.RequiresVerification:
+                    result = ResponseMessage(new HttpResponseMessage(HttpStatusCode.Forbidden) {
+                        ReasonPhrase = "User is not verified.",
+                        Content = new StringContent("User is not verified.")
+                    });
+                    break;
+                //case SignInStatus.Failure:
+                default:
+                    result = BadRequest("login failed, try again.");
+                    break;
             }
             return result;
         }

@@ -75,8 +75,8 @@
       <HintPath>..\..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Nowin, Version=0.17.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Nowin.0.17.1.0\lib\net45\Nowin.dll</HintPath>
+    <Reference Include="Nowin, Version=0.17.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Nowin.0.17.2.0\lib\net45\Nowin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Owin">
@@ -118,6 +118,7 @@
     </None>
     <None Include="windsor.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
