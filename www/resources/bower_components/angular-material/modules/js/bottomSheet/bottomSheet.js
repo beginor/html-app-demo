@@ -2,10 +2,10 @@
  * Angular Material Design
  * https://github.com/angular/material
  * @license MIT
- * v0.6.1
+ * v0.11.0
  */
-(function() {
-'use strict';
+(function( window, angular, undefined ){
+"use strict";
 
 /**
  * @ngdoc module
@@ -13,10 +13,11 @@
  * @description
  * BottomSheet
  */
-angular.module('material.components.bottomSheet', [
-  'material.core',
-  'material.components.backdrop'
-])
+angular
+  .module('material.components.bottomSheet', [
+    'material.core',
+    'material.components.backdrop'
+  ])
   .directive('mdBottomSheet', MdBottomSheetDirective)
   .provider('$mdBottomSheet', MdBottomSheetProvider);
 
@@ -26,6 +27,7 @@ function MdBottomSheetDirective() {
   };
 }
 
+
 /**
  * @ngdoc service
  * @name $mdBottomSheet
@@ -34,7 +36,7 @@ function MdBottomSheetDirective() {
  * @description
  * `$mdBottomSheet` opens a bottom sheet over the app and provides a simple promise API.
  *
- * ### Restrictions
+ * ## Restrictions
  *
  * - The bottom sheet's template must have an outer `<md-bottom-sheet>` element.
  * - Add the `md-grid` class to the bottom sheet for a grid layout.
@@ -74,6 +76,9 @@ function MdBottomSheetDirective() {
  *   have an outer `md-bottom-sheet` element.
  *   - `template` - `{string=}`: Same as templateUrl, except this is an actual
  *   template string.
+ *   - `scope` - `{object=}`: the scope to link the template / controller to. If none is specified, it will create a new child scope.
+ *     This scope will be destroyed when the bottom sheet is removed unless `preserveScope` is set to true.
+ *   - `preserveScope` - `{boolean=}`: whether to preserve the scope when the element is removed. Default is false
  *   - `controller` - `{string=}`: The controller to associate with this bottom sheet.
  *   - `locals` - `{string=}`: An object containing key/value pairs. The keys will
  *   be used as names of values to inject into the controller. For example,
@@ -85,6 +90,11 @@ function MdBottomSheetDirective() {
  *   - `resolve` - `{object=}`: Similar to locals, except it takes promises as values
  *   and the bottom sheet will not open until the promises resolve.
  *   - `controllerAs` - `{string=}`: An alias to assign the controller to on the scope.
+ *   - `parent` - `{element=}`: The element to append the bottom sheet to. The `parent` may be a `function`, `string`,
+ *   `object`, or null. Defaults to appending to the body of the root element (or the root element) of the application.
+ *   e.g. angular.element(document.getElementById('content')) or "#content"
+ *   - `disableParentScroll` - `{boolean=}`: Whether to disable scrolling while the bottom sheet is open.
+ *     Default true.
  *
  * @returns {promise} A promise that can be resolved with `$mdBottomSheet.hide()` or
  * rejected with `$mdBottomSheet.cancel()`.
@@ -96,7 +106,7 @@ function MdBottomSheetDirective() {
  *
  * @description
  * Hide the existing bottom sheet and resolve the promise returned from
- * `$mdBottomSheet.show()`.
+ * `$mdBottomSheet.show()`. This call will close the most recently opened/current bottomsheet (if any).
  *
  * @param {*=} response An argument for the resolved promise.
  *
@@ -115,15 +125,19 @@ function MdBottomSheetDirective() {
  */
 
 function MdBottomSheetProvider($$interimElementProvider) {
+  // how fast we need to flick down to close the sheet, pixels/ms
+  var CLOSING_VELOCITY = 0.5;
+  var PADDING = 80; // same as css
 
-  bottomSheetDefaults.$inject = ["$animate", "$mdConstant", "$timeout", "$$rAF", "$compile", "$mdTheming", "$mdBottomSheet", "$rootElement"];
+  bottomSheetDefaults.$inject = ["$animate", "$mdConstant", "$mdUtil", "$mdTheming", "$mdBottomSheet", "$rootElement", "$mdGesture"];
   return $$interimElementProvider('$mdBottomSheet')
     .setDefaults({
+      methods: ['disableParentScroll', 'escapeToClose', 'targetEvent'],
       options: bottomSheetDefaults
     });
 
-  /* @ngInject */
-  function bottomSheetDefaults($animate, $mdConstant, $timeout, $$rAF, $compile, $mdTheming, $mdBottomSheet, $rootElement) {
+  /* ngInject */
+  function bottomSheetDefaults($animate, $mdConstant, $mdUtil, $mdTheming, $mdBottomSheet, $rootElement, $mdGesture) {
     var backdrop;
 
     return {
@@ -131,30 +145,38 @@ function MdBottomSheetProvider($$interimElementProvider) {
       targetEvent: null,
       onShow: onShow,
       onRemove: onRemove,
-      escapeToClose: true
+      escapeToClose: true,
+      disableParentScroll: true
     };
 
-    function onShow(scope, element, options) {
-      // Add a backdrop that will close on click
-      backdrop = $compile('<md-backdrop class="md-opaque md-bottom-sheet-backdrop">')(scope);
-      backdrop.on('click touchstart', function() {
-        $timeout($mdBottomSheet.cancel);
-      });
 
+    function onShow(scope, element, options, controller) {
+
+      element = $mdUtil.extractElementByName(element, 'md-bottom-sheet');
+
+      // Add a backdrop that will close on click
+      backdrop = $mdUtil.createBackdrop(scope, "md-bottom-sheet-backdrop md-opaque");
+      backdrop.on('click', function() {
+        $mdUtil.nextTick($mdBottomSheet.cancel,true);
+      });
       $mdTheming.inherit(backdrop, options.parent);
 
       $animate.enter(backdrop, options.parent, null);
 
-      var bottomSheet = new BottomSheet(element);
+      var bottomSheet = new BottomSheet(element, options.parent);
       options.bottomSheet = bottomSheet;
 
       // Give up focus on calling item
       options.targetEvent && angular.element(options.targetEvent.target).blur();
       $mdTheming.inherit(bottomSheet.element, options.parent);
 
+      if (options.disableParentScroll) {
+        options.restoreScroll = $mdUtil.disableScrollAround(bottomSheet.element, options.parent);
+      }
+
       return $animate.enter(bottomSheet.element, options.parent)
         .then(function() {
-          var focusable = angular.element(
+          var focusable = $mdUtil.findFocusTarget(element) || angular.element(
             element[0].querySelector('button') ||
             element[0].querySelector('a') ||
             element[0].querySelector('[ng-click]')
@@ -164,7 +186,7 @@ function MdBottomSheetProvider($$interimElementProvider) {
           if (options.escapeToClose) {
             options.rootElementKeyupCallback = function(e) {
               if (e.keyCode === $mdConstant.KEY_CODE.ESCAPE) {
-                $timeout($mdBottomSheet.cancel);
+                $mdUtil.nextTick($mdBottomSheet.cancel,true);
               }
             };
             $rootElement.on('keyup', options.rootElementKeyupCallback);
@@ -174,9 +196,16 @@ function MdBottomSheetProvider($$interimElementProvider) {
     }
 
     function onRemove(scope, element, options) {
+
       var bottomSheet = options.bottomSheet;
+
       $animate.leave(backdrop);
       return $animate.leave(bottomSheet.element).then(function() {
+        if (options.disableParentScroll) {
+          options.restoreScroll();
+          delete options.restoreScroll;
+        }
+
         bottomSheet.cleanup();
 
         // Restore focus
@@ -187,99 +216,47 @@ function MdBottomSheetProvider($$interimElementProvider) {
     /**
      * BottomSheet class to apply bottom-sheet behavior to an element
      */
-    function BottomSheet(element) {
-      var MAX_OFFSET = 80; // amount past the bottom of the element that we can drag down, this is same as in _bottomSheet.scss
-      var WIGGLE_AMOUNT = 20; // point where it starts to get "harder" to drag
-      var CLOSING_VELOCITY = 10; // how fast we need to flick down to close the sheet
-      var startY, lastY, velocity, transitionDelay, startTarget;
-
-      // coercion incase $mdCompiler returns multiple elements
-      element = element.eq(0);
-
-      element.on('touchstart', onTouchStart)
-             .on('touchmove', onTouchMove)
-             .on('touchend', onTouchEnd);
+    function BottomSheet(element, parent) {
+      var deregister = $mdGesture.register(parent, 'drag', { horizontal: false });
+      parent.on('$md.dragstart', onDragStart)
+        .on('$md.drag', onDrag)
+        .on('$md.dragend', onDragEnd);
 
       return {
         element: element,
         cleanup: function cleanup() {
-          element.off('touchstart', onTouchStart)
-                 .off('touchmove', onTouchMove)
-                 .off('touchend', onTouchEnd);
+          deregister();
+          parent.off('$md.dragstart', onDragStart);
+          parent.off('$md.drag', onDrag);
+          parent.off('$md.dragend', onDragEnd);
         }
       };
 
-      function onTouchStart(e) {
-        e.preventDefault();
-        startTarget = e.target;
-        startY = getY(e);
-
+      function onDragStart(ev) {
         // Disable transitions on transform so that it feels fast
-        transitionDelay = element.css($mdConstant.CSS.TRANSITION_DURATION);
-        element.css($mdConstant.CSS.TRANSITION_DURATION, '0s');
+        element.css($mdConstant.CSS.TRANSITION_DURATION, '0ms');
       }
 
-      function onTouchEnd(e) {
-        // Re-enable the transitions on transforms
-        element.css($mdConstant.CSS.TRANSITION_DURATION, transitionDelay);
-
-        var currentY = getY(e);
-        // If we didn't scroll much, and we didn't change targets, assume its a click
-        if ( Math.abs(currentY - startY) < 5  && e.target == startTarget) {
-          angular.element(e.target).triggerHandler('click');
-        } else {
-          // If they went fast enough, trigger a close.
-          if (velocity > CLOSING_VELOCITY) {
-            $timeout($mdBottomSheet.cancel);
-
-          // Otherwise, untransform so that we go back to our normal position
-          } else {
-            setTransformY(undefined);
-          }
+      function onDrag(ev) {
+        var transform = ev.pointer.distanceY;
+        if (transform < 5) {
+          // Slow down drag when trying to drag up, and stop after PADDING
+          transform = Math.max(-PADDING, transform / 2);
         }
+        element.css($mdConstant.CSS.TRANSFORM, 'translate3d(0,' + (PADDING + transform) + 'px,0)');
       }
 
-      function onTouchMove(e) {
-        var currentY = getY(e);
-        var delta = currentY - startY;
-
-        velocity = currentY - lastY;
-        lastY = currentY;
-
-        // Do some conversion on delta to get a friction-like effect
-        delta = adjustedDelta(delta);
-        setTransformY(delta + MAX_OFFSET);
-      }
-
-      /**
-       * Helper function to find the Y aspect of various touch events.
-       **/
-      function getY(e) {
-        var touch = e.touches && e.touches.length ? e.touches[0] : e.changedTouches[0];
-        return touch.clientY;
-      }
-
-      /**
-       * Transform the element along the y-axis
-       **/
-      function setTransformY(amt) {
-        if (amt === null || amt === undefined) {
+      function onDragEnd(ev) {
+        if (ev.pointer.distanceY > 0 &&
+            (ev.pointer.distanceY > 20 || Math.abs(ev.pointer.velocityY) > CLOSING_VELOCITY)) {
+          var distanceRemaining = element.prop('offsetHeight') - ev.pointer.distanceY;
+          var transitionDuration = Math.min(distanceRemaining / ev.pointer.velocityY * 0.75, 500);
+          element.css($mdConstant.CSS.TRANSITION_DURATION, transitionDuration + 'ms');
+          $mdUtil.nextTick($mdBottomSheet.cancel,true);
+        } else {
+          element.css($mdConstant.CSS.TRANSITION_DURATION, '');
           element.css($mdConstant.CSS.TRANSFORM, '');
-        } else {
-          element.css($mdConstant.CSS.TRANSFORM, 'translate3d(0, ' + amt + 'px, 0)');
         }
-      }
-
-      // Returns a new value for delta that will never exceed MAX_OFFSET_AMOUNT
-      // Will get harder to exceed it as you get closer to it
-      function adjustedDelta(delta) {
-        if ( delta < 0  && delta < -MAX_OFFSET + WIGGLE_AMOUNT) {
-          delta = -delta;
-          var base = MAX_OFFSET - WIGGLE_AMOUNT;
-          delta = Math.max(-MAX_OFFSET, -Math.min(MAX_OFFSET - 5, base + ( WIGGLE_AMOUNT * (delta - base)) / MAX_OFFSET) - delta / 50);
-        }
-
-        return delta;
       }
     }
 
@@ -288,4 +265,4 @@ function MdBottomSheetProvider($$interimElementProvider) {
 }
 MdBottomSheetProvider.$inject = ["$$interimElementProvider"];
 
-})();
+})(window, window.angular);
