@@ -53,31 +53,11 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Beginor.Owin.Logging, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Beginor.Owin.Logging.0.1.1\lib\net45\Beginor.Owin.Logging.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Beginor.Owin.Security.Aes">
       <HintPath>..\..\packages\Beginor.Owin.Security.Aes.0.2.0\lib\net45\Beginor.Owin.Security.Aes.dll</HintPath>
     </Reference>
-    <Reference Include="Beginor.Owin.StaticFile, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Beginor.Owin.StaticFile.0.2.0\lib\net45\Beginor.Owin.StaticFile.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Beginor.Owin.Windsor, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Beginor.Owin.Windsor.0.1.1\lib\net45\Beginor.Owin.Windsor.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Castle.Facilities.Logging">
       <HintPath>..\..\packages\Castle.LoggingFacility.3.3.0\lib\net45\Castle.Facilities.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Nowin, Version=0.17.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Nowin.0.17.2.0\lib\net45\Nowin.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -101,6 +81,21 @@
     </Reference>
     <Reference Include="Castle.Services.Logging.Log4netIntegration">
       <HintPath>..\..\packages\Castle.Core-log4net.3.3.3\lib\net45\Castle.Services.Logging.Log4netIntegration.dll</HintPath>
+    </Reference>
+    <Reference Include="Beginor.Owin.Logging, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\packages\Beginor.Owin.Logging.0.1.1\lib\net45\Beginor.Owin.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Beginor.Owin.StaticFile, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\packages\Beginor.Owin.StaticFile.0.2.0\lib\net45\Beginor.Owin.StaticFile.dll</HintPath>
+    </Reference>
+    <Reference Include="Beginor.Owin.Windsor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\packages\Beginor.Owin.Windsor.0.1.1\lib\net45\Beginor.Owin.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Nowin">
+      <HintPath>..\..\packages\Nowin.0.17.3.0\lib\net45\Nowin.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
