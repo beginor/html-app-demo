@@ -6,7 +6,22 @@
 
     configure.$inject = ['$routeProvider', '$locationProvider', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide'];
 
+    app.run(startup);
+    startup.$inject = ['$rootScope', '$location'];
+
     return app;
+
+    function startup($rootScope, $location) {
+        $rootScope.$on('$routeChangeStart', function (evt, next, current) {
+            if (angular.isUndefined(next.$$route)) {
+                return;
+            }
+            if (!next.$$route.allowAnonymous) {
+                evt.preventDefault();
+                $location.path('/login');
+            }
+        });
+    }
 
     function configure($routeProvider, $locationProvider, $controllerProvider, $compileProvider, $filterProvider, $provide) {
         app.registerController = $controllerProvider.register;
@@ -23,7 +38,8 @@
                 $routeProvider.when(path, {
                     templateUrl: route.templateUrl,
                     controller: route.controller,
-                    resolve: loader(route.dependencies)
+                    resolve: loader(route.dependencies),
+                    allowAnonymous: route.allowAnonymous
                 });
             });
         }

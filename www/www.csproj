@@ -49,6 +49,10 @@
     <Content Include="app.routes.js" />
     <Content Include="components\list\listEditController.js" />
     <Content Include="components\list\listEditView.html" />
+    <Content Include="components\user\loginController.js" />
+    <Content Include="components\user\loginView.html" />
+    <Content Include="components\user\registerController.js" />
+    <Content Include="components\user\registerView.html" />
     <Content Include="resources\bower.json" />
     <Content Include="resources\bower_components\angular-animate\angular-animate.js" />
     <Content Include="resources\bower_components\angular-animate\angular-animate.min.js" />
@@ -192,6 +196,7 @@
     <Content Include="resources\styles\ie.css" />
     <Content Include="resources\styles\print.css" />
     <Content Include="resources\styles\screen.css" />
+    <Content Include="factories\userFactory.js" />
     <Content Include="shared\confirm\confirmController.js" />
     <Content Include="shared\confirm\confirmView.html" />
     <Content Include="shared\header.html" />
