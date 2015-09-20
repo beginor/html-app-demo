@@ -2,11 +2,14 @@
 using Microsoft.Owin;
 using Owin;
 using WebApi;
+using Beginor.Owin.Security.Aes;
 using Beginor.Owin.Windsor;
 using Beginor.Owin.WebApi.Windsor;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Microsoft.Owin.Security.Cookies;
 using Newtonsoft.Json.Serialization;
+using NHibernate;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -15,18 +18,24 @@ namespace WebApi {
     public class Startup {
 
         public void Configuration(IAppBuilder app) {
+            var container = app.GetWindsorContainer();
+            container.Register(
+                Component.For<ISessionFactory>().UsingFactoryMethod(() => HibernateFactory.CreateSessionFactory(""))
+                         .LifestyleSingleton()
+                );
             ConfigIdentity(app);
             ConfigAuth(app);
             ConfigWebApi(app);
         }
 
         private void ConfigAuth(IAppBuilder app) {
+            app.UseAesDataProtectionProvider();
             app.UseCookieAuthentication(new CookieAuthenticationOptions {
-
             });
         }
 
         private static void ConfigIdentity(IAppBuilder app) {
+            
             app.CreatePerOwinContext<IWindsorContainer>((opt, context) => app.GetWindsorContainer(), (opt, c) => {
                 // Do not dispose windsor container.
             });

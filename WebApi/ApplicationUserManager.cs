@@ -1,5 +1,4 @@
 using System;
-using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -10,8 +9,6 @@ using WebApi.Models;
 namespace WebApi {
 
     public class ApplicationUserManager : UserManager<ApplicationUser> {
-
-        private static bool registerToWindsor = false;
 
         public ApplicationUserManager(IUserStore<ApplicationUser> store) : base(store) {
         }

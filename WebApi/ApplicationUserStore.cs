@@ -1,5 +1,4 @@
-﻿using NHibernate;
-using NHibernate.AspNet.Identity;
+﻿using NHibernate.AspNet.Identity;
 using WebApi.Models;
 
 namespace WebApi {
