@@ -6,6 +6,8 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using Microsoft.AspNet.Identity.Owin;
 using WebApi.Models;
+using WebApi.IdentitySupport;
+using WebApi.Data;
 
 namespace WebApi.Controllers {
 

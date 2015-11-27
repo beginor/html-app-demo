@@ -34,9 +34,6 @@
     <Reference Include="Beginor.Owin.WebApi.Windsor">
       <HintPath>..\..\packages\Beginor.Owin.WebApi.Windsor.0.1.1\lib\net45\Beginor.Owin.WebApi.Windsor.dll</HintPath>
     </Reference>
-    <Reference Include="Beginor.Owin.Windsor">
-      <HintPath>..\..\packages\Beginor.Owin.Windsor.0.1.1\lib\net45\Beginor.Owin.Windsor.dll</HintPath>
-    </Reference>
     <Reference Include="Castle.Core">
       <HintPath>..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
@@ -73,9 +70,6 @@
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <HintPath>..\..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.9.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d">
-      <HintPath>..\..\packages\MySql.Data.6.9.7\lib\net45\MySql.Data.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
       <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -97,27 +91,27 @@
     <Reference Include="Beginor.Owin.Security.Aes">
       <HintPath>..\..\packages\Beginor.Owin.Security.Aes.0.2.0\lib\net45\Beginor.Owin.Security.Aes.dll</HintPath>
     </Reference>
+    <Reference Include="Beginor.Owin.Windsor">
+      <HintPath>..\..\packages\Beginor.Owin.Windsor.0.2.0\lib\net45\Beginor.Owin.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\..\packages\MySql.Data.6.9.8\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationSignInManager.cs" />
-    <Compile Include="ApplicationUserManager.cs" />
-    <Compile Include="ApplicationUserStore.cs" />
-    <Compile Include="Argument.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Disposable.cs" />
-    <Compile Include="HibernateContext.cs" />
-    <Compile Include="HibernateFactory.cs" />
-    <Compile Include="IdentityConfig.cs" />
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Category.cs" />
-    <Compile Include="NHibernateFacility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Data\ApplicationUser.cs" />
+    <Compile Include="Data\AspNetIdentity.cs" />
+    <Compile Include="Data\ApplicationRole.cs" />
+    <Compile Include="IdentitySupport.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -127,7 +121,9 @@
     <None Include="Diagrams\_identity.cd" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Models\ApplicationUser.hbm.xml" />
+    <EmbeddedResource Include="Data\ApplicationUser.hbm.xml" />
+    <EmbeddedResource Include="Data\AspNetIdentity.hbm.xml" />
+    <EmbeddedResource Include="Data\ApplicationRole.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -137,4 +133,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
 </Project>

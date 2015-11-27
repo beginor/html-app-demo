@@ -5,16 +5,18 @@ using System.Web.Http;
 using Castle.Core.Logging;
 using NHibernate.Linq;
 using WebApi.Models;
+using NHibernate;
+using WebApi.Data;
 
 namespace WebApi.Controllers {
 
     public class UsersController : ApiController {
 
-        private HibernateContext dataContext;
+        private ISessionFactory dataContext;
 
         public ILogger Logger { get; set; } = NullLogger.Instance;
 
-        public UsersController(HibernateContext dataContext) {
+        public UsersController(ISessionFactory dataContext) {
             this.dataContext = dataContext;
         }
 

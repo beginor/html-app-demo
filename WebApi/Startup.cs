@@ -10,6 +10,7 @@ using Castle.Windsor;
 using Microsoft.Owin.Security.Cookies;
 using Newtonsoft.Json.Serialization;
 using NHibernate;
+using NHibernate.Cfg;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -20,9 +21,17 @@ namespace WebApi {
         public void Configuration(IAppBuilder app) {
             var container = app.GetWindsorContainer();
             container.Register(
-                Component.For<ISessionFactory>().UsingFactoryMethod(() => HibernateFactory.CreateSessionFactory(""))
-                         .LifestyleSingleton()
-                );
+                Component.For<ISessionFactory>()
+                .UsingFactoryMethod(
+                    factoryMethod: (kernel, componentModel, creationContext) => {
+                        var config = new Configuration();
+                        var sessionFactory = config.BuildSessionFactory();
+                        return sessionFactory;
+                    },
+                    managedExternally: true
+                )
+                .LifestyleSingleton()
+            );
             ConfigIdentity(app);
             ConfigAuth(app);
             ConfigWebApi(app);
@@ -30,17 +39,13 @@ namespace WebApi {
 
         private void ConfigAuth(IAppBuilder app) {
             app.UseAesDataProtectionProvider();
+
             app.UseCookieAuthentication(new CookieAuthenticationOptions {
             });
         }
 
         private static void ConfigIdentity(IAppBuilder app) {
-            
-            app.CreatePerOwinContext<IWindsorContainer>((opt, context) => app.GetWindsorContainer(), (opt, c) => {
-                // Do not dispose windsor container.
-            });
-            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-            app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+            //
         }
 
         private static void ConfigWebApi(IAppBuilder app) {
