@@ -33,7 +33,7 @@ namespace WebApi.Controllers {
                 try {
                     var query = session.Query<ApplicationUser>();
                     var data = query.ToList();
-                    result = Json(data);
+                    result = Ok(data);
                 }
                 catch (Exception ex) {
                     result = InternalServerError(ex);
