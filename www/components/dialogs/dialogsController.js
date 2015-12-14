@@ -1,10 +1,9 @@
-define(['app', 'components/dialogs/modalController'], function (app) {
+define(['components/dialogs/modalController'], function () {
     'use strict';
 
-    app.registerController('DialogsController', DialogsController);
+    angular.module('app').registerController('DialogsController', DialogsController);
 
     DialogsController.$inject = ['$scope', '$modal', '$log'];
-
     function DialogsController($scope, $modal, $log) {
         $scope.greeting = 'Dialog Demo';
         $scope.items = ['item1', 'item2', 'item3'];

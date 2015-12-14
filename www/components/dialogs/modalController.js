@@ -1,10 +1,9 @@
-﻿define(['app'], function (app) {
+﻿define([], function () {
     'use strict';
 
-    app.registerController('ModalController', ModalController);
+    angular.module('app').registerController('ModalController', ModalController);
 
     ModalController.$inject = ['$scope', '$modalInstance', 'items'];
-
     function ModalController($scope, $modalInstance, items) {
         $scope.items = items;
         $scope.selected = {

@@ -1,9 +1,9 @@
-﻿define(['app', 'components/list/listFactory', 'shared/confirm/confirmController', 'components/list/listEditController'], function (app) {
+﻿define(['components/list/listFactory', 'shared/confirm/confirmController', 'components/list/listEditController'], function () {
     'use strict';
 
-    app.registerController('ListController', ListController);
-    ListController.$inject = ['$scope', '$modal', 'categories'];
+    angular.module('app').registerController('ListController', ListController);
 
+    ListController.$inject = ['$scope', '$modal', 'categories'];
     function ListController($scope, $modal, cat) {
         $scope.greeting = 'Category list';
         $scope.data = [];

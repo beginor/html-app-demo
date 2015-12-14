@@ -1,7 +1,7 @@
-define(['app'], function(app) {
+define([], function() {
     'use strict';
 
-    app.registerController('HelpController', HelpController);
+    angular.module('app').registerController('HelpController', HelpController);
     HelpController.$inject = ['$scope'];
 
     function HelpController($scope) {

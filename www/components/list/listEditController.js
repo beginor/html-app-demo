@@ -1,10 +1,9 @@
-﻿define(['app', 'components/list/listFactory'], function(app) {
+﻿define(['components/list/listFactory'], function() {
     'use strict';
 
-    app.registerController('ListEditController', ListEditController);
+    angular.module('app').registerController('ListEditController', ListEditController);
 
     ListEditController.$inject = ['$scope', '$modalInstance', 'categories', 'id'];
-
     function ListEditController($scope, $modalInstance, cat, id) {
         $scope.title = '';
         $scope.cat = {};

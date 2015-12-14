@@ -1,7 +1,7 @@
-﻿define(['app'], function (app) {
+﻿define([], function () {
     'use strict';
 
-    app.registerFactory('categories', categories);
+    angular.module('app').registerFactory('categories', categories);
     categories.$inject = ['$resource'];
 
     function categories($resource) {

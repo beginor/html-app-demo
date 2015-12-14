@@ -1,7 +1,7 @@
-﻿define(['app'], function (app) {
+﻿define([], function () {
     'use strict';
 
-    app.registerFactory('UserFactory', UserFactory);
+    angular.module('app').registerFactory('UserFactory', UserFactory);
     UserFactory.$inject = ['$http', '$q'];
 
     function UserFactory($http, $q) {

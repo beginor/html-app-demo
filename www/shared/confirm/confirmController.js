@@ -1,7 +1,7 @@
-﻿define(['app'], function (app) {
+﻿define([], function () {
     'use strict';
 
-    app.registerController('ConfirmController', ConfirmController);
+    angular.module('app').registerController('ConfirmController', ConfirmController);
     ConfirmController.$inject = ['$scope', '$modalInstance', 'title', 'message'];
 
     function ConfirmController($scope, $modalInstance, title, message) {

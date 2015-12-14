@@ -1,10 +1,9 @@
-define(['app'], function(app) {
+define([], function() {
     'use strict';
 
-    app.registerController('WelcomeController', WelcomeController);
+    angular.module('app').registerController('WelcomeController', WelcomeController);
 
     WelcomeController.$inject = ['$scope'];
-    
     function WelcomeController($scope) {
         $scope.greeting = 'Welcome to angular js app.';
     }

@@ -1,7 +1,7 @@
-define(['app'], function(app) {
+define([], function() {
     'use strict';
 
-    app.registerController('UserController', UserController);
+    angular.module('app').registerController('UserController', UserController);
 
     UserController.$inject = ['$scope'];
     
