@@ -95,7 +95,7 @@
       <HintPath>..\..\packages\Beginor.Owin.Windsor.0.2.0\lib\net45\Beginor.Owin.Windsor.dll</HintPath>
     </Reference>
     <Reference Include="Nowin">
-      <HintPath>..\..\packages\Nowin.0.21.0.0\lib\net45\Nowin.dll</HintPath>
+      <HintPath>..\..\packages\Nowin.0.22.0.0\lib\net45\Nowin.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
