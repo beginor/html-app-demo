@@ -34,11 +34,26 @@
     <Reference Include="Beginor.Owin.WebApi.Windsor">
       <HintPath>..\..\packages\Beginor.Owin.WebApi.Windsor.0.1.1\lib\net45\Beginor.Owin.WebApi.Windsor.dll</HintPath>
     </Reference>
+    <Reference Include="Beginor.Owin.Logging, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\packages\Beginor.Owin.Logging.0.1.1\lib\net45\Beginor.Owin.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Beginor.Owin.StaticFile, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\packages\Beginor.Owin.StaticFile.0.2.0\lib\net45\Beginor.Owin.StaticFile.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.Core">
       <HintPath>..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Windsor">
       <HintPath>..\..\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Facilities.Logging">
+      <HintPath>..\..\packages\Castle.LoggingFacility.3.3.0\lib\net45\Castle.Facilities.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Services.Logging.Log4netIntegration">
+      <HintPath>..\..\packages\Castle.Core-log4net.3.3.3\lib\net45\Castle.Services.Logging.Log4netIntegration.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -112,6 +127,7 @@
     <Compile Include="Data\AspNetIdentity.cs" />
     <Compile Include="Data\ApplicationRole.cs" />
     <Compile Include="IdentitySupport.cs" />
+    <Compile Include="Middlewares\ConsoleLogMiddleware.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -119,6 +135,10 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Diagrams\_identity.cd" />
+    <None Include="log.config" />
+    <None Include="windsor.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Data\ApplicationUser.hbm.xml" />
@@ -135,5 +155,6 @@
   -->
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="Middlewares\" />
   </ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace OwinApiHost.Middlewares {
+namespace WebApi.Middlewares {
 
     using AppFunc = Func<IDictionary<string, object>, Task>;
 
@@ -22,3 +22,4 @@ namespace OwinApiHost.Middlewares {
 
     }
 }
+
