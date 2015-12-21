@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwinApiHost", "OwinApiHost\OwinApiHost.csproj", "{CA73573C-49CD-47DF-AA44-B944EA13BA32}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{766B7CA4-DF5A-4735-B689-12CAD0B07CE5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "www", "www\www.csproj", "{BEC8F5AD-3157-473D-96E9-70505C1CC592}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{912648EB-2DC3-45F3-B698-CCBC9DC32704}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "test\UnitTest\UnitTest.csproj", "{9B3F5C99-2953-4545-937D-5195984EDED7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{43C2FFE5-4218-4B80-9D97-BE12CFF3E02B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwinApiHost", "src\OwinApiHost\OwinApiHost.csproj", "{CA73573C-49CD-47DF-AA44-B944EA13BA32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "src\WebApi\WebApi.csproj", "{766B7CA4-DF5A-4735-B689-12CAD0B07CE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "www", "src\www\www.csproj", "{BEC8F5AD-3157-473D-96E9-70505C1CC592}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +40,9 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9B3F5C99-2953-4545-937D-5195984EDED7} = {912648EB-2DC3-45F3-B698-CCBC9DC32704}
+		{CA73573C-49CD-47DF-AA44-B944EA13BA32} = {43C2FFE5-4218-4B80-9D97-BE12CFF3E02B}
+		{766B7CA4-DF5A-4735-B689-12CAD0B07CE5} = {43C2FFE5-4218-4B80-9D97-BE12CFF3E02B}
+		{BEC8F5AD-3157-473D-96E9-70505C1CC592} = {43C2FFE5-4218-4B80-9D97-BE12CFF3E02B}
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
