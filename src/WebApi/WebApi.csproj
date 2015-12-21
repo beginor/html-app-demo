@@ -139,7 +139,9 @@
     <None Include="windsor.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="hibernate.config" />
+    <None Include="hibernate.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Data\ApplicationUser.hbm.xml" />
