@@ -15,6 +15,8 @@ using NHibernate;
 using NHibernate.Cfg;
 using WebApi.Middlewares;
 using Castle.Windsor.Installer;
+using Microsoft.Owin.Security.DataProtection;
+using Microsoft.Owin.Security;
 
 [assembly: OwinStartup(typeof(Startup))]
 
@@ -23,76 +25,31 @@ namespace WebApi {
     public class Startup {
 
         public void Configuration(IAppBuilder app) {
+            app.UseWindsorContainer("windsor.config");
+            var container = app.GetWindsorContainer();
 
-            var container = ConfigWindsor();
-            app.UseWindsorContainer(container);
+            app.UseWindsorMiddleWare();
 
             var loggerFactory = container.Resolve<Microsoft.Owin.Logging.ILoggerFactory>();
             app.SetLoggerFactory(loggerFactory);
-
-            app.UseAesDataProtectionProvider();
 
             var logMiddleware = container.Resolve<ConsoleLogMiddleware>();
             app.Use(logMiddleware);
 
             var options = container.Resolve<StaticFileMiddlewareOptions>();
             app.UseStaticFile(options);
-
+            // identity;
             container.Register(
-                Component.For<ISessionFactory>()
-                .UsingFactoryMethod(
-                    factoryMethod: (kernel, componentModel, creationContext) => {
-                        var config = new NHibernate.Cfg.Configuration();
-                        var sessionFactory = config.BuildSessionFactory();
-                        return sessionFactory;
-                    },
-                    managedExternally: true
-                )
-                .LifestyleSingleton()
-            );
-            ConfigIdentity(app);
-            ConfigAuth(app);
-            ConfigWebApi(app);
-        }
-
-        private static IWindsorContainer ConfigWindsor() {
-            IWindsorContainer container = new WindsorContainer();
-            //var xml = new Castle.Windsor.Configuration.Interpreters.XmlInterpreter("windsor.config");
-
-            //container.Install()
-            // log4net facility
-            container.AddFacility(new Castle.Facilities.Logging.LoggingFacility(Castle.Facilities.Logging.LoggerImplementation.Log4net, "log.config"));
-            // console log middleware
-            container.Register(
-                // static file middleware options
-                Component.For<StaticFileMiddlewareOptions>()
-                .DependsOn(
-                    Dependency.OnValue("RootDirectory", "../www"),
-                    Dependency.OnValue("DefaultFile", "index.html")
-                )
-                .LifestyleSingleton(),
-                // owin logger factory.
-                Component.For<Microsoft.Owin.Logging.ILoggerFactory>()
-                .ImplementedBy<Beginor.Owin.Logging.CastleLoggerFactory>()
-                .LifestyleSingleton()
+                Component.For<IAuthenticationManager>().FromOwinContext().LifestyleTransient()
             );
 
-            Castle.Core.Configuration.Xml.XmlConfigurationDeserializer d = new Castle.Core.Configuration.Xml.XmlConfigurationDeserializer();
-            var cfg = d.Deserialize(null);
-            cfg.Children.Find(c => c.Name == "database");
-
-            return container;
-        }
-
-        private void ConfigAuth(IAppBuilder app) {
-            app.UseAesDataProtectionProvider();
-
+            // authentication
+            var dataProtectionProvider = container.Resolve<IDataProtectionProvider>();
+            app.SetDataProtectionProvider(dataProtectionProvider);
             app.UseCookieAuthentication(new CookieAuthenticationOptions {
             });
-        }
 
-        private static void ConfigIdentity(IAppBuilder app) {
-            //
+            ConfigWebApi(app);
         }
 
         private static void ConfigWebApi(IAppBuilder app) {
