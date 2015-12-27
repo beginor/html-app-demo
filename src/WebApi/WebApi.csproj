@@ -37,9 +37,6 @@
     <Reference Include="Beginor.Owin.Logging">
       <HintPath>..\..\..\packages\Beginor.Owin.Logging.0.1.1\lib\net45\Beginor.Owin.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Beginor.Owin.StaticFile">
-      <HintPath>..\..\..\packages\Beginor.Owin.StaticFile.0.2.0\lib\net45\Beginor.Owin.StaticFile.dll</HintPath>
-    </Reference>
     <Reference Include="Castle.Core">
       <HintPath>..\..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
@@ -112,6 +109,9 @@
     <Reference Include="MySql.Data">
       <HintPath>..\..\..\packages\MySql.Data.6.9.8\lib\net45\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Beginor.Owin.StaticFile">
+      <HintPath>..\..\..\packages\Beginor.Owin.StaticFile.0.3.0\lib\net45\Beginor.Owin.StaticFile.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
@@ -129,6 +129,8 @@
     <Compile Include="IdentitySupport.cs" />
     <Compile Include="Middlewares\ConsoleLogMiddleware.cs" />
     <Compile Include="NHibernateFacility.cs" />
+    <Compile Include="Results\ChallengeResult.cs" />
+    <Compile Include="ApplicationOAuthProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -160,5 +162,6 @@
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Middlewares\" />
+    <Folder Include="Results\" />
   </ItemGroup>
 </Project>

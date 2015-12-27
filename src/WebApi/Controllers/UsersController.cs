@@ -7,40 +7,45 @@ using NHibernate.Linq;
 using WebApi.Models;
 using NHibernate;
 using WebApi.Data;
+using Microsoft.AspNet.Identity;
 
 namespace WebApi.Controllers {
 
+    [RoutePrefix("api/users")]
     public class UsersController : ApiController {
 
-        private ISessionFactory dataContext;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public ILogger Logger { get; set; } = NullLogger.Instance;
 
-        public UsersController(ISessionFactory dataContext) {
-            this.dataContext = dataContext;
+        public UsersController(UserManager<ApplicationUser> userManager) {
+            this.userManager = userManager;
         }
 
         protected override void Dispose(bool disposing) {
             if (disposing) {
-                dataContext = null;
+                userManager.Dispose();
             }
             base.Dispose(disposing);
         }
 
+        [Route("")]
         public IHttpActionResult GetAll() {
             IHttpActionResult result;
-            using (var session = dataContext.OpenSession()) {
-                try {
-                    var query = session.Query<ApplicationUser>();
-                    var data = query.ToList();
-                    result = Ok(data);
-                }
-                catch (Exception ex) {
-                    result = InternalServerError(ex);
-                    Logger.Error("Can not get all users.", ex);
-                }
+            try {
+                var query = userManager.Users;
+                var data = query.ToList();
+                result = Ok(data);
+            }
+            catch (Exception ex) {
+                result = InternalServerError(ex);
+                Logger.Error("Can not get all users.", ex);
             }
             return result;
+        }
+
+        public IHttpActionResult Post(ApplicationUser user) {
+            return Ok();
         }
 
     }

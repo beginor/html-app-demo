@@ -17,12 +17,22 @@ using WebApi.Middlewares;
 using Castle.Windsor.Installer;
 using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.OAuth;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using WebApi.IdentitySupport;
+using System;
+using WebApi.Data;
 
 [assembly: OwinStartup(typeof(Startup))]
 
 namespace WebApi {
 
     public class Startup {
+
+        public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
+
+        public static string PublicClientId { get; private set; }
 
         public void Configuration(IAppBuilder app) {
             app.UseWindsorContainer("windsor.config");
@@ -47,8 +57,53 @@ namespace WebApi {
             var dataProtectionProvider = container.Resolve<IDataProtectionProvider>();
             app.SetDataProtectionProvider(dataProtectionProvider);
             app.UseCookieAuthentication(new CookieAuthenticationOptions {
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                Provider = new CookieAuthenticationProvider {
+                    // Enables the application to validate the security stamp when the user logs in.
+                    // This is a security feature which is used when you change a password or add an external login to your account.  
+                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<UserManager<ApplicationUser>, ApplicationUser>(
+                        validateInterval: TimeSpan.FromMinutes(30),
+                        regenerateIdentity: (manager, user) => manager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie)
+                    )
+                }
             });
+            app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
+            // Configure the application for OAuth based flow
+            PublicClientId = "self";
+//            OAuthOptions = new OAuthAuthorizationServerOptions {
+//                TokenEndpointPath = new PathString("/Token"),
+//                Provider = new ApplicationOAuthProvider(PublicClientId),
+//
+//                AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
+//                AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
+//                // In production mode set AllowInsecureHttp = false
+//                AllowInsecureHttp = true
+//            };
+//
+//            // Enable the application to use bearer tokens to authenticate users
+//            app.UseOAuthBearerTokens(OAuthOptions);
+
+            // Uncomment the following lines to enable logging in with third party login providers
+            //app.UseMicrosoftAccountAuthentication(
+            //    clientId: "",
+            //    clientSecret: ""
+            //);
+
+            //app.UseTwitterAuthentication(
+            //    consumerKey: "",
+            //    consumerSecret: ""
+            //);
+
+            //app.UseFacebookAuthentication(
+            //    appId: "",
+            //    appSecret: ""
+            //);
+
+            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions {
+            //    ClientId = "",
+            //    ClientSecret = ""
+            //});
             ConfigWebApi(app);
         }
 

@@ -6,29 +6,51 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using Microsoft.AspNet.Identity.Owin;
 using WebApi.Models;
-using WebApi.IdentitySupport;
 using WebApi.Data;
+using Microsoft.AspNet.Identity;
+using System.Collections.Generic;
+using System.Security.Claims;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.Cookies;
+using WebApi.IdentitySupport;
 
 namespace WebApi.Controllers {
 
-    [Authorize]
-    [RoutePrefix("api/account")]
+    [RoutePrefix("api/account"), Authorize]
     public class AccountController : ApiController {
 
-        private ApplicationUserManager UserManager => Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+        private UserManager<ApplicationUser> userManager;
+        private ApplicationSignInManager signInManager;
+        private IAuthenticationManager authenticationManager;
 
-        private ApplicationSignInManager SignInManager => Request.GetOwinContext().Get<ApplicationSignInManager>();
-
-        [Route("")]
-        public async Task<IHttpActionResult> GetUser() {
-            var user = await UserManager.FindByNameAsync(User.Identity.Name);
-            IHttpActionResult result = Ok(user);
-            return result;
+        public AccountController(UserManager<ApplicationUser> userManager, ApplicationSignInManager signInManager, IAuthenticationManager authenticationManager) {
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            this.authenticationManager = authenticationManager;
         }
 
-        [AllowAnonymous]
-        [Route("")]
-        public async Task<IHttpActionResult> PostRegister([FromBody] RegisterModel model) {
+        protected override void Dispose(bool disposing) {
+            if (disposing) {
+                userManager.Dispose();
+                signInManager.Dispose();
+                //authenticationManager.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        [Route("userinfo"), HttpGet]
+        public UserInfoViewModel GetUserInfo() {
+            var externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
+            var userInfo = new UserInfoViewModel {
+                UserName = User.Identity.GetUserName(),
+                HasRegistered = externalLogin == null,
+                LoginProvider = externalLogin?.LoginProvider
+            };
+            return userInfo;
+        }
+
+        [Route("register"), HttpPost, AllowAnonymous]
+        public async Task<IHttpActionResult> Register([FromBody]RegisterBindingModel model) {
             if (!ModelState.IsValid) {
                 return new InvalidModelStateResult(ModelState, this);
             }
@@ -37,7 +59,7 @@ namespace WebApi.Controllers {
                 Email = model.Email,
                 UserName = model.Email
             };
-            var identityResult = await UserManager.CreateAsync(user);
+            var identityResult = await userManager.CreateAsync(user);
 
             IHttpActionResult result;
 
@@ -54,46 +76,67 @@ namespace WebApi.Controllers {
             return result;
         }
 
-        [AllowAnonymous]
-        [Route("login")]
-        public async Task<IHttpActionResult> PostLogin([FromBody]LoginModel model) {
+        [Route("login"), HttpPost, AllowAnonymous]
+        public async Task<IHttpActionResult> Login([FromBody]LoginBindingModel model) {
             if (!ModelState.IsValid) {
                 return new InvalidModelStateResult(ModelState, this);
             }
 
-            var signInStatus = await SignInManager.PasswordSignInAsync(
-                model.Email,
+            var signInStatus = await signInManager.PasswordSignInAsync(
+                model.UserName,
                 model.Password,
                 model.RememberMe,
-                shouldLockout: false
+                shouldLockout: true
             );
 
-            IHttpActionResult result;
-
-            switch (signInStatus) {
-                case SignInStatus.Success:
-                    var user = await UserManager.FindByEmailAsync(model.Email);
-                    result = Ok(user);
-                    break;
-                case SignInStatus.LockedOut:
-                    result = ResponseMessage(new HttpResponseMessage(HttpStatusCode.Forbidden) {
-                        ReasonPhrase = "User is locked out.",
-                        Content = new StringContent("User is locked out.")
-                    });
-                    break;
-                case SignInStatus.RequiresVerification:
-                    result = ResponseMessage(new HttpResponseMessage(HttpStatusCode.Forbidden) {
-                        ReasonPhrase = "User is not verified.",
-                        Content = new StringContent("User is not verified.")
-                    });
-                    break;
-                //case SignInStatus.Failure:
-                default:
-                    result = BadRequest("login failed, try again.");
-                    break;
+            if (signInStatus == SignInStatus.Success) {
+                var userInfo = GetUserInfo();
+                return Ok(userInfo);
             }
-            return result;
+            return BadRequest("login failed, try again.");
         }
 
+        [Route("Logout")]
+        public IHttpActionResult Logout() {
+            authenticationManager.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+            return Ok();
+        }
+
+        private class ExternalLoginData {
+
+            public string LoginProvider { get; private set; }
+            public string ProviderKey { get; private set; }
+
+            private string UserName { get; set; }
+
+            public IList<Claim> GetClaims() {
+                IList<Claim> claims = new List<Claim>();
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, ProviderKey, null, LoginProvider));
+
+                if (UserName != null) {
+                    claims.Add(new Claim(ClaimTypes.Name, UserName, null, LoginProvider));
+                }
+
+                return claims;
+            }
+
+            public static ExternalLoginData FromIdentity(ClaimsIdentity identity) {
+                var providerKeyClaim = identity?.FindFirst(ClaimTypes.NameIdentifier);
+
+                if (string.IsNullOrEmpty(providerKeyClaim?.Issuer) || string.IsNullOrEmpty(providerKeyClaim.Value)) {
+                    return null;
+                }
+
+                if (providerKeyClaim.Issuer == ClaimsIdentity.DefaultIssuer) {
+                    return null;
+                }
+
+                return new ExternalLoginData {
+                    LoginProvider = providerKeyClaim.Issuer,
+                    ProviderKey = providerKeyClaim.Value,
+                    UserName = identity.FindFirstValue(ClaimTypes.Name)
+                };
+            }
+        }
     }
 }

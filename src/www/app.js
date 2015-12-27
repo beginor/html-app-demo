@@ -30,7 +30,7 @@
         app.registerFactory = $provide.factory;
         app.registerService = $provide.service;
 
-        $locationProvider.html5Mode(false);
+        $locationProvider.html5Mode(true);
         //$locationProvider.hashPrefix("!");
 
         if (config.routes != undefined) {

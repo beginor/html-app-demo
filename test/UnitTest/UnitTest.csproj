@@ -29,9 +29,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="Iesi.Collections">
       <HintPath>..\..\..\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
@@ -61,9 +58,6 @@
     </Reference>
     <Reference Include="Beginor.Owin.Security.Aes">
       <HintPath>..\..\..\packages\Beginor.Owin.Security.Aes.0.2.0\lib\net45\Beginor.Owin.Security.Aes.dll</HintPath>
-    </Reference>
-    <Reference Include="Beginor.Owin.StaticFile">
-      <HintPath>..\..\..\packages\Beginor.Owin.StaticFile.0.2.0\lib\net45\Beginor.Owin.StaticFile.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -109,6 +103,12 @@
     </Reference>
     <Reference Include="MySql.Data">
       <HintPath>..\..\..\packages\MySql.Data.6.9.8\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\packages\NUnit.3.0.1\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Beginor.Owin.StaticFile">
+      <HintPath>..\..\..\packages\Beginor.Owin.StaticFile.0.3.0\lib\net45\Beginor.Owin.StaticFile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
