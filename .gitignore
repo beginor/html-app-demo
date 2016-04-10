@@ -83,3 +83,7 @@ out
 .sass-cache
 *.ide
 *.DotSettings
+
+bower_components
+node_modules
+typings

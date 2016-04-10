@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "amd",
+    "target": "es5",
+    "sourceMap": false,
+    "inlineSourceMap": true,
+    "outDir": "build"
+  },
+  "exclude": [
+    "node_modules",
+    "bower_components",
+    ".idea",
+    "typings/main",
+    "typings/main.d.ts",
+    "build"
+  ]
+}

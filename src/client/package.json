@@ -1,0 +1,36 @@
+{
+  "name": "html-app-demo-client",
+  "version": "1.0.0",
+  "description": "html app demo client side",
+  "main": "build/index.html",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beginor/html-app-demo.git"
+  },
+  "keywords": [
+    "typescript",
+    "angularjs",
+    "angular-ui-router",
+    "angular-ui-bootstrap",
+    "scss",
+    "gulp",
+    "requirejs"
+  ],
+  "author": "beginor",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/beginor/html-app-demo/issues"
+  },
+  "homepage": "https://github.com/beginor/html-app-demo#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-live-server": "0.0.29",
+    "gulp-sass": "^2.2.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-typescript": "^2.12.1",
+    "typescript": "^1.8.9"
+  }
+}
