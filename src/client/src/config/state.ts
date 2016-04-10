@@ -1,7 +1,7 @@
 /**
  * Created by zhang on 4/10/16.
  */
-import {IAppStateConfig} from "../models/state";
+import {IAppStateConfig} from "../models/app";
 
 var appState: IAppStateConfig = {
     defaultUrl: '/home',

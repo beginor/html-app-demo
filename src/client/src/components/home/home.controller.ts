@@ -1,4 +1,4 @@
-import {IAsyncModule} from "../../models/state";
+import {IAsyncModule} from "../../models/app";
 
 class HomeController {
     

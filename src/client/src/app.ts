@@ -7,7 +7,7 @@ import 'angular-bootstrap';
 import 'angular-ui-router';
 
 import { appState } from './config/state';
-import {IAsyncState, IAsyncModule} from "./models/state";
+import {IAsyncState, IAsyncModule} from "./models/app";
 
 var app = <IAsyncModule> angular.module('app', ['ngResource', 'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'ui.router']);
 
