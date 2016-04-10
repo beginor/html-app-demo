@@ -7,18 +7,7 @@ import 'angular-bootstrap';
 import 'angular-ui-router';
 
 import { appState } from './config/state';
-import {IAsyncState} from "./models/state";
-
-export interface IAsyncModule extends angular.IModule {
-
-    registerService(name: string, constructor: Function): angular.IServiceProvider;
-    registerFactory(name: string, serviceFactoryFunction: Function): angular.IServiceProvider;
-    registerFilter(name: string | {}): angular.IServiceProvider;
-    registerDirective(name: string, directiveFactory: Function) : angular.ICompileProvider;
-    registerController(name: string, controllerConstructor: Function): void;
-    registerComponent(name: string, options: angular.IComponentOptions): angular.ICompileProvider;
-
-}
+import {IAsyncState, IAsyncModule} from "./models/state";
 
 var app = <IAsyncModule> angular.module('app', ['ngResource', 'ngAnimate', 'ngSanitize', 'ui.bootstrap', 'ui.router']);
 
@@ -70,4 +59,5 @@ function configState(
     });
     $urlRouterProvider.otherwise(appState.defaultUrl);
 }
+
 app.config(configState);

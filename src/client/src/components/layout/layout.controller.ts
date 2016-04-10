@@ -1,4 +1,4 @@
-import {IAsyncModule} from "../../app";
+import {IAsyncModule} from "../../models/state";
 /**
  * Created by zhang on 4/10/16.
  */
