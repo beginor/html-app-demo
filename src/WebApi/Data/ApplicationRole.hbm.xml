@@ -2,6 +2,6 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="WebApi" namespace="WebApi.Data">
     <joined-subclass name="ApplicationRole" extends="NHibernate.AspNet.Identity.IdentityRole, NHibernate.AspNet.Identity" table="ApplicationRole">
         <key column="RoleId" />
-        <property name="Description" column="Description" type="string" length="256" />
+        <property name="Description" column="Description" type="string" length="255" />
     </joined-subclass>
 </hibernate-mapping>

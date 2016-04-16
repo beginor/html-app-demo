@@ -1,22 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <hibernate-mapping xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:nhibernate-mapping-2.2">
     <class name="NHibernate.AspNet.Identity.IdentityUser, NHibernate.AspNet.Identity" table="AspNetUser">
-        <id name="Id" type="string" column="Id">
+        <id name="Id" column="Id" type="string" length="32">
             <generator class="uuid.hex">
-                <param name="format">D</param>
+                <param name="format">N</param>
             </generator>
         </id>
-        <property name="AccessFailedCount" />
-        <property name="Email" />
-        <property name="EmailConfirmed" />
-        <property name="LockoutEnabled" />
-        <property name="LockoutEndDateUtc" />
-        <property name="PasswordHash" />
-        <property name="PhoneNumber" />
-        <property name="PhoneNumberConfirmed" />
-        <property name="TwoFactorEnabled" />
-        <property name="UserName" length="255" not-null="true" unique="true" />
-        <property name="SecurityStamp" />
+        <property name="AccessFailedCount" column="AccessFailedCount" type="int" not-null="true"/>
+        <property name="Email" column="Email" type="string" length="255" not-null="true"/>
+        <property name="EmailConfirmed" column="EmailConfirmed" type="bool" not-null="true"/>
+        <property name="LockoutEnabled" column="LockoutEnabled" type="bool" not-null="true"/>
+        <property name="LockoutEndDateUtc" column="LockoutEndDateUtc" type="datetime" />
+        <property name="PasswordHash" column="PasswordHash" type="string" length="255"/>
+        <property name="PhoneNumber" column="PhoneNumber" type="string" length="128" />
+        <property name="PhoneNumberConfirmed" column="PhoneNumberConfirmed" type="bool" not-null="true"/>
+        <property name="TwoFactorEnabled" column="TwoFactorEnabled" type="bool" not-null="true"/>
+        <property name="UserName" column="UserName" type="string" length="255" not-null="true" unique="true" />
+        <property name="SecurityStamp" column="SecurityStamp" type="string" length="255" />
         <bag name="Roles" table="AspNetUserRole" inverse="true">
             <key>
                 <column name="UserId" />
@@ -32,15 +32,15 @@
         <set name="Logins" table="AspNetUserLogin" cascade="all,delete-orphan">
             <key column="UserId" />
             <composite-element class="NHibernate.AspNet.Identity.IdentityUserLogin, NHibernate.AspNet.Identity">
-                <property name="LoginProvider" />
-                <property name="ProviderKey" />
+                <property name="LoginProvider" column="LoginProvider" type="string" length="128" not-null="true"/>
+                <property name="ProviderKey" column="ProviderKey" type="string" length="128" not-null="true"/>
             </composite-element>
         </set>
     </class>
     <class name="NHibernate.AspNet.Identity.IdentityRole, NHibernate.AspNet.Identity" table="AspNetRole">
-        <id name="Id" type="String">
+        <id name="Id" column="Id" type="String" length="32">
             <generator class="uuid.hex">
-                <param name="format">D</param>
+                <param name="format">N</param>
             </generator>
         </id>
         <property name="Name" length="255" not-null="true" unique="true" />
@@ -54,11 +54,11 @@
         </set>
     </class>
     <class name="NHibernate.AspNet.Identity.IdentityUserClaim, NHibernate.AspNet.Identity" table="AspNetUserClaim">
-        <id name="Id" type="Int32">
+        <id name="Id" type="int">
             <generator class="identity" />
         </id>
-        <property name="ClaimType" />
-        <property name="ClaimValue" />
+        <property name="ClaimType" column="ClaimType" type="string" length="1024" />
+        <property name="ClaimValue" column="ClaimValue" type="string" length="1024" />
         <many-to-one name="User" column="UserId" />
     </class>
 </hibernate-mapping>
