@@ -10,3 +10,63 @@ body  {
   padding: 50px 0 0 0;
   background-color: $background-color;
 }
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid $font-color;
+}
+
+.navbar-fixed-top {
+  border: 0;
+}
+
+.sidebar {
+  display: none;
+
+  @media (min-width: 768px) {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: $sidebar-background-color;
+    border-right: 1px solid $sidebar-border-color;
+  }
+}
+
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+
+  > li {
+    > a {
+      padding-right: 20px;
+      padding-left: 20px;
+    }
+  }
+
+  > .active {
+    > a, > a:hover, > a:focus {
+      color: $sidebar-link-active-color;
+      background-color: $sidebar-link-active-background-color;
+    }
+  }
+}
+
+.main {
+  padding: 20px;
+
+  @media (min-width: 768px) {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+
+  .page-header {
+    margin-top: 0;
+  }
+}
