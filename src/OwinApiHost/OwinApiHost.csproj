@@ -68,7 +68,7 @@
             <HintPath>..\..\..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
         </Reference>
         <Reference Include="Nowin">
-            <HintPath>..\..\..\packages\Nowin.0.22.1.0\lib\net45\Nowin.dll</HintPath>
+          <HintPath>..\..\..\packages\Nowin.0.22.2.0\lib\net45\Nowin.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>
