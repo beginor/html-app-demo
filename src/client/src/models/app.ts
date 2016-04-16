@@ -3,13 +3,11 @@
  */
 export interface IAsyncModule extends angular.IModule {
 
-    registerService(name: string, constructor: Function): angular.IServiceProvider;
-    registerFactory(name: string, serviceFactoryFunction: Function): angular.IServiceProvider;
-    registerFilter(name: string | {}): angular.IServiceProvider;
-    registerDirective(name: string, directiveFactory: Function) : angular.ICompileProvider;
-    registerController(name: string, controllerConstructor: Function): void;
-    registerComponent(name: string, options: angular.IComponentOptions): angular.ICompileProvider;
-
+    controllerProvider: ng.IControllerProvider;
+    compileProvider: ng.ICompileProvider,
+    filterProvider: angular.IFilterProvider;
+    provide: angular.auto.IProvideService;
+    
 }
 
 export interface IAppStateConfig {

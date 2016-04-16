@@ -7,10 +7,10 @@ class LayoutController {
     static $inject = [];
 
     constructor() {
-
+        //console.log('layout controller constructor');
     }
 
 }
 
 (<IAsyncModule> angular.module('app'))
-    .registerController('LayoutController', LayoutController);
+    .controllerProvider.register('LayoutController', LayoutController);

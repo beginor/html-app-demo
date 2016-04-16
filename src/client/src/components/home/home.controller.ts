@@ -7,4 +7,4 @@ class HomeController {
 }
 
 (<IAsyncModule> angular.module('app'))
-    .registerController('HomeController', HomeController);
+    .controllerProvider.register('HomeController', HomeController);

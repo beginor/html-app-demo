@@ -13,4 +13,4 @@ class UserListController {
 }
 
 (<IAsyncModule> angular.module('app'))
-    .registerController('UserListController', UserListController);
+    .controllerProvider.register('UserListController', UserListController);

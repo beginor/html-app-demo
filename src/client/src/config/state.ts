@@ -12,14 +12,15 @@ var appState: IAppStateConfig = {
             controller: 'LayoutController',
             controllerAs: 'vm',
             dependencies: [
-                './components/layout/layout.controller'
+                'components/layout/layout.controller',
+                'components/app-header/app-header.component'
             ],
             allowAnonymous: true
         },
         'app.home': {
             url: '/home',
             views: {
-                'mainView': {
+                'main': {
                     templateUrl: 'components/home/home.view.html',
                     controller: 'HomeController',
                     controllerAs: 'vm'
@@ -36,14 +37,15 @@ var appState: IAppStateConfig = {
             controller: 'LayoutController',
             controllerAs: 'vm',
             dependencies: [
-                './components/layout/layout.controller'
+                'components/layout/layout.controller',
+                'components/app-header/app-header.component'
             ],
             allowAnonymous: false
         },
         'admin.users': {
             url: '/users',
             views: {
-                'mainView': {
+                'main': {
                     templateUrl: 'components/users/user-list.view.html',
                     controller: 'UserListController',
                     controllerAs: 'vm'

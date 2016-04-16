@@ -23,12 +23,10 @@ function configAsyncModule(
     $filterProvider: angular.IFilterProvider,
     $provide: angular.auto.IProvideService
 ) {
-    app.registerController = $controllerProvider.register;
-    app.registerDirective = $compileProvider.directive;
-    app.registerComponent = $compileProvider.component;
-    app.registerFilter = $filterProvider.register;
-    app.registerFactory = $provide.factory;
-    app.registerService = $provide.service;
+    app.controllerProvider = $controllerProvider;
+    app.compileProvider = $compileProvider;
+    app.filterProvider = $filterProvider;
+    app.provide = $provide;
 }
 
 app.config(configAsyncModule);

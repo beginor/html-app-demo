@@ -2,7 +2,11 @@ import {IAsyncModule} from "../models/app";
 /**
  * Created by zhang on 4/10/16.
  */
-class AccountService {
+export interface IAccountService {
+    
+}
+
+class AccountService implements IAccountService {
     
     static $inject = ['$http', '$q'];
     
@@ -13,4 +17,4 @@ class AccountService {
 }
 
 (<IAsyncModule> angular.module('app'))
-    .registerService('AccountService', AccountService);
+    .provide.service('AccountService', AccountService);
