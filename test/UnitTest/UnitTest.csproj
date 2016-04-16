@@ -101,20 +101,23 @@
     <Reference Include="MySql.Data">
       <HintPath>..\..\..\packages\MySql.Data.6.9.8\lib\net45\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\..\packages\NUnit.3.0.1\lib\net45\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="Beginor.Owin.StaticFile">
       <HintPath>..\..\..\packages\Beginor.Owin.StaticFile.0.3.0\lib\net45\Beginor.Owin.StaticFile.dll</HintPath>
     </Reference>
     <Reference Include="Nowin">
       <HintPath>..\..\..\packages\Nowin.0.22.2.0\lib\net45\Nowin.dll</HintPath>
     </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\packages\NUnit.3.2.0\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Data.Sqlite" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NhibernateTest.cs" />
     <Compile Include="WindsorTest.cs" />
     <Compile Include="IdentityTest.cs" />
+    <Compile Include="SqliteTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
