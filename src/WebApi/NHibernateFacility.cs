@@ -8,7 +8,7 @@ using System.IO;
 namespace WebApi {
 
     public class NHibernateFacility : AbstractFacility {
-        
+
         protected override void Init() {
             var configFile = FacilityConfig.Attributes["configFile"];
             if (string.IsNullOrEmpty(configFile)) {
@@ -21,6 +21,9 @@ namespace WebApi {
         }
 
         private void RegisterSessionFactory(string configFile) {
+            if (!Path.IsPathRooted(configFile)) {
+                configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, configFile);
+            }
             if (!File.Exists(configFile)) {
                 throw new FacilityException("Config file not exists.");
             }
@@ -43,5 +46,6 @@ namespace WebApi {
             );
         }
     }
+
 }
 
