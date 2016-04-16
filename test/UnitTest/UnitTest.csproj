@@ -110,14 +110,11 @@
     <Reference Include="nunit.framework">
       <HintPath>..\..\..\packages\NUnit.3.2.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Data.Sqlite" />
-    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NhibernateTest.cs" />
     <Compile Include="WindsorTest.cs" />
     <Compile Include="IdentityTest.cs" />
-    <Compile Include="SqliteTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
