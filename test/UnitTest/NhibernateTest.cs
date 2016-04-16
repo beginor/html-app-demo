@@ -1,12 +1,12 @@
 ﻿using NUnit.Framework;
 using System;
-using NHibernate;
+using System.IO;
 using NHibernate.Cfg;
 using WebApi.Data;
 using NHibernate.Linq;
 using System.Linq;
 using Microsoft.Owin.Security.DataProtection;
-using Microsoft.AspNet.Identity;
+using NHibernate.Tool.hbm2ddl;
 
 namespace UnitTest {
 
@@ -16,14 +16,48 @@ namespace UnitTest {
         [Test]
         public void CanBuildSessionFactory() {
             var cfg = new Configuration();
-            cfg.Configure("hibernate.config");
+            var configFile = "hibernate.config";
+            if (!Path.IsPathRooted(configFile)) {
+                configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, configFile);
+            }
+            cfg.Configure(configFile);
+
             using (var sessionFactory = cfg.BuildSessionFactory()) {
+                
                 var session = sessionFactory.OpenSession();
 
                 var users = session.Query<ApplicationUser>().ToList();
 
                 Console.WriteLine(users.Count);
             }
+        }
+
+        [Test]
+        public void CanGenerateSchema() {
+            var cfg = new Configuration();
+            var configFile = "hibernate.config";
+            if (!Path.IsPathRooted(configFile)) {
+                configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, configFile);
+            }
+            cfg.Configure(configFile);
+            var export = new SchemaExport(cfg);
+            export.Drop(true, true);
+            export.Execute(true, true, false);
+        }
+
+        [Test]
+        public void CanUpdateSchema() {
+            var cfg = new Configuration();
+            var configFile = "hibernate.config";
+            if (!Path.IsPathRooted(configFile)) {
+                configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, configFile);
+            }
+            cfg.Configure(configFile);
+            //var export = new SchemaExport(cfg);
+            //export.Execute(true, true, true);
+
+            var update = new SchemaUpdate(cfg);
+            update.Execute(true, true);
         }
 
         [Test]
