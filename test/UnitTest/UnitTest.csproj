@@ -145,7 +145,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\WebApi\WebApi.csproj">
       <Project>{766B7CA4-DF5A-4735-B689-12CAD0B07CE5}</Project>
-      <Name>WebApi</Name>
+      <Name>Application</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
