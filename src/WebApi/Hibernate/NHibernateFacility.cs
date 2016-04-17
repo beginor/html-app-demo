@@ -5,7 +5,7 @@ using Castle.MicroKernel.Registration;
 using NHibernate;
 using System.IO;
 
-namespace Beginor.Owin.Application {
+namespace Beginor.Owin.Application.Hibernate {
 
     public class NHibernateFacility : AbstractFacility {
 

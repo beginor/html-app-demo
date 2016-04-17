@@ -121,6 +121,7 @@
     <Compile Include="NhibernateTest.cs" />
     <Compile Include="WindsorTest.cs" />
     <Compile Include="IdentityTest.cs" />
+    <Compile Include="ProtectionProviderTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

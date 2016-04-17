@@ -1,9 +1,8 @@
-﻿using System;
-using NUnit.Framework;
+﻿using System.Linq;
 using Microsoft.AspNet.Identity;
-using Beginor.Owin.Application.Data;
 using NHibernate.AspNet.Identity;
-using System.Linq;
+using NUnit.Framework;
+using Beginor.Owin.Application.Data;
 
 namespace UnitTest {
 

@@ -1,12 +1,11 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using System.IO;
-using NHibernate.Cfg;
-using Beginor.Owin.Application.Data;
-using NHibernate.Linq;
 using System.Linq;
-using Microsoft.Owin.Security.DataProtection;
+using NHibernate.Cfg;
+using NHibernate.Linq;
 using NHibernate.Tool.hbm2ddl;
+using NUnit.Framework;
+using Beginor.Owin.Application.Data;
 
 namespace UnitTest {
 
@@ -23,11 +22,8 @@ namespace UnitTest {
             cfg.Configure(configFile);
 
             using (var sessionFactory = cfg.BuildSessionFactory()) {
-                
                 var session = sessionFactory.OpenSession();
-
                 var users = session.Query<ApplicationUser>().ToList();
-
                 Console.WriteLine(users.Count);
             }
         }
@@ -58,19 +54,6 @@ namespace UnitTest {
 
             var update = new SchemaUpdate(cfg);
             update.Execute(true, true);
-        }
-
-        [Test]
-        public void CanResolveDataProtectionProvider() {
-            var dpp = Container.Resolve<IDataProtectionProvider>();
-            Assert.IsNotNull(dpp);
-            var helloWorld = "Hello, world!";
-            var dp = dpp.Create(helloWorld);
-            var encryptd = dp.Protect(System.Text.Encoding.UTF8.GetBytes(helloWorld));
-            var clear = dp.Unprotect(encryptd);
-            var result = System.Text.Encoding.UTF8.GetString(clear);
-
-            Assert.AreEqual(helloWorld, result);
         }
 
     }
