@@ -1,7 +1,7 @@
 ﻿using System;
 using NHibernate.AspNet.Identity;
 
-namespace WebApi.Data {
+namespace Beginor.Owin.Application.Data {
 
     public partial class ApplicationUser : IdentityUser {
     }

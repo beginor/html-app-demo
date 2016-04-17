@@ -6,9 +6,9 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.AspNet.Identity;
-using WebApi.Data;
+using Beginor.Owin.Application.Data;
 
-namespace WebApi {
+namespace Beginor.Owin.Application.OAuth {
 
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider {
 

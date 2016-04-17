@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using Microsoft.Owin.Security;
 
-namespace WebApi.Results {
+namespace Beginor.Owin.Application.Results {
 
     public class ChallengeResult : IHttpActionResult {
 

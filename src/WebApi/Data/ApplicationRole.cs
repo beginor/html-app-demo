@@ -1,7 +1,6 @@
 ﻿using System;
 
-namespace WebApi.Data {
-
+namespace Beginor.Owin.Application.Data {
 
     public partial class ApplicationRole {
 

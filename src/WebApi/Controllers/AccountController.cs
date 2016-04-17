@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Microsoft.AspNet.Identity.Owin;
-using WebApi.Models;
-using WebApi.Data;
+using Beginor.Owin.Application.Models;
+using Beginor.Owin.Application.Data;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
-using WebApi.IdentitySupport;
+using Beginor.Owin.Application.Identity;
 
-namespace WebApi.Controllers {
+namespace Beginor.Owin.Application.Controllers {
 
     [RoutePrefix("api/account"), Authorize]
     public class AccountController : ApiController {

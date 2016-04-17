@@ -4,12 +4,12 @@ using System.Linq;
 using System.Web.Http;
 using Castle.Core.Logging;
 using NHibernate.Linq;
-using WebApi.Models;
+using Beginor.Owin.Application.Models;
 using NHibernate;
-using WebApi.Data;
+using Beginor.Owin.Application.Data;
 using Microsoft.AspNet.Identity;
 
-namespace WebApi.Controllers {
+namespace Beginor.Owin.Application.Controllers {
 
     [RoutePrefix("api/users")]
     public class UsersController : ApiController {

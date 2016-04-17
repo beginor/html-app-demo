@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 
-namespace WebApi.Models {
+namespace Beginor.Owin.Application.Models {
 
     // Models returned by AccountController actions.
 

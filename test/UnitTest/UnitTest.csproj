@@ -110,6 +110,12 @@
     <Reference Include="nunit.framework">
       <HintPath>..\..\..\packages\NUnit.3.2.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Cors">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NhibernateTest.cs" />

@@ -5,7 +5,7 @@ using Castle.MicroKernel.Registration;
 using NHibernate;
 using System.IO;
 
-namespace WebApi {
+namespace Beginor.Owin.Application {
 
     public class NHibernateFacility : AbstractFacility {
 

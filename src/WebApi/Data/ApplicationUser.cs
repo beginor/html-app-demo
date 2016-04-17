@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using NHibernate.AspNet.Identity;
 
-namespace WebApi.Data {
+namespace Beginor.Owin.Application.Data {
 
     public partial class ApplicationUser {
     }

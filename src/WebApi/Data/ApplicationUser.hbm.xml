@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="WebApi" namespace="WebApi.Data">
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Beginor.Owin.Application" namespace="Beginor.Owin.Application.Data">
     <joined-subclass name="ApplicationUser" extends="NHibernate.AspNet.Identity.IdentityUser, NHibernate.AspNet.Identity" table="ApplicationUser">
         <key column="UserId" />
     </joined-subclass>

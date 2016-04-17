@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using Microsoft.AspNet.Identity;
-using WebApi.Data;
+using Beginor.Owin.Application.Data;
 using NHibernate.AspNet.Identity;
 using System.Linq;
 

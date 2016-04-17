@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 using NHibernate.Cfg;
-using WebApi.Data;
+using Beginor.Owin.Application.Data;
 using NHibernate.Linq;
 using System.Linq;
 using Microsoft.Owin.Security.DataProtection;
