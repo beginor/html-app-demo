@@ -126,24 +126,24 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="..\..\src\WebApi\App.config">
-      <Link>App.config</Link>
+    <None Include="..\..\src\application\app.config">
+      <Link>app.config</Link>
     </None>
-    <None Include="..\..\src\WebApi\hibernate.config">
+    <None Include="..\..\src\application\hibernate.config">
       <Link>hibernate.config</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="..\..\src\WebApi\log.config">
+    <None Include="..\..\src\application\log.config">
       <Link>log.config</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="..\..\src\WebApi\windsor.config">
+    <None Include="..\..\src\application\windsor.config">
       <Link>windsor.config</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\WebApi\WebApi.csproj">
+    <ProjectReference Include="..\..\src\application\Application.csproj">
       <Project>{766B7CA4-DF5A-4735-B689-12CAD0B07CE5}</Project>
       <Name>Application</Name>
     </ProjectReference>
