@@ -123,11 +123,15 @@
     <Reference Include="Nowin">
       <HintPath>..\..\..\packages\Nowin.0.22.2.0\lib\net45\Nowin.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Data\ApplicationUser.cs" />
@@ -144,6 +148,13 @@
     <Compile Include="Hibernate\NHibernateFacility.cs" />
     <Compile Include="OAuth\ApplicationOAuthProvider.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Models\ApplicationUserModel.cs" />
+    <Compile Include="Models\ApplicationUserModel.partial.cs" />
+    <Compile Include="Models\ApplicationRoleModel.cs" />
+    <Compile Include="Models\ApplicationRoleModel.partial.cs" />
+    <Compile Include="Models\UserInfoModel.cs" />
+    <Compile Include="Models\UserInfoModel.partial.cs" />
+    <Compile Include="Controllers\AccountController.partial.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -182,5 +193,6 @@
     <Folder Include="Security\" />
     <Folder Include="Hibernate\" />
     <Folder Include="OAuth\" />
+    <Folder Include="Core\" />
   </ItemGroup>
 </Project>
