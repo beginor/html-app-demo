@@ -52,6 +52,7 @@ namespace Beginor.Owin.Application {
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
 
             var cors = new EnableCorsAttribute(origins: "*", headers: "*", methods: "*");
+            cors.SupportsCredentials = true;
             config.EnableCors(cors);
 
             config.MapHttpAttributeRoutes();

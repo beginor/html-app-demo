@@ -3,5 +3,7 @@
     <joined-subclass name="ApplicationRole" extends="NHibernate.AspNet.Identity.IdentityRole, NHibernate.AspNet.Identity" table="ApplicationRole">
         <key column="RoleId" />
         <property name="Description" column="Description" type="string" length="255" />
+        <property name="Essential" column="Essential" type="bool" />
+        <property name="Module" column="Module" type="string" length="255" />
     </joined-subclass>
 </hibernate-mapping>

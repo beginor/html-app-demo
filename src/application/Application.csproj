@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>true</ConsolePause>
+    <ConsolePause>false</ConsolePause>
     <ExternalConsole>true</ExternalConsole>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -155,6 +155,10 @@
     <Compile Include="Models\UserInfoModel.cs" />
     <Compile Include="Models\UserInfoModel.partial.cs" />
     <Compile Include="Controllers\AccountController.partial.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Security\ISystemRolesFinder.cs" />
+    <Compile Include="Security\ReflectionSystemRolesFinder.cs" />
+    <Compile Include="Models\ModelMappings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

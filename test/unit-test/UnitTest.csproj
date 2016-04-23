@@ -127,6 +127,8 @@
     <Compile Include="WindsorTest.cs" />
     <Compile Include="IdentityTest.cs" />
     <Compile Include="ProtectionProviderTest.cs" />
+    <Compile Include="SystemRolesFinderTest.cs" />
+    <Compile Include="RolesControllerTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

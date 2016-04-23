@@ -34,7 +34,7 @@ namespace Beginor.Owin.Application.Controllers {
             }
 
             if (identity != null) {
-                var appUser = this.userMgr.FindById(identity.GetUserId());
+                //var appUser = this.userMgr.FindById(identity.GetUserId());
                 //userInfo.Area = appUser.Area;
             }
             return Ok(userInfo);

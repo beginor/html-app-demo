@@ -22,24 +22,24 @@ namespace UnitTest {
             cfg.Configure(configFile);
 
             using (var sessionFactory = cfg.BuildSessionFactory()) {
-                var session = sessionFactory.OpenSession();
-                var users = session.Query<ApplicationUser>().ToList();
-                Console.WriteLine(users.Count);
+                //var session = sessionFactory.OpenSession();
+                //var users = session.Query<ApplicationUser>().ToList();
+                //Console.WriteLine(users.Count);
             }
         }
 
-        [Test]
-        public void CanGenerateSchema() {
-            var cfg = new Configuration();
-            var configFile = "hibernate.config";
-            if (!Path.IsPathRooted(configFile)) {
-                configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, configFile);
-            }
-            cfg.Configure(configFile);
-            var export = new SchemaExport(cfg);
-            export.Drop(true, true);
-            export.Execute(true, true, false);
-        }
+        //[Test, Ignore("Use update schema")]
+        //public void CanGenerateSchema() {
+        //    var cfg = new Configuration();
+        //    var configFile = "hibernate.config";
+        //    if (!Path.IsPathRooted(configFile)) {
+        //        configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, configFile);
+        //    }
+        //    cfg.Configure(configFile);
+        //    var export = new SchemaExport(cfg);
+        //    export.Drop(true, true);
+        //    export.Execute(true, true, false);
+        //}
 
         [Test]
         public void CanUpdateSchema() {
@@ -49,8 +49,6 @@ namespace UnitTest {
                 configFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, configFile);
             }
             cfg.Configure(configFile);
-            //var export = new SchemaExport(cfg);
-            //export.Execute(true, true, true);
 
             var update = new SchemaUpdate(cfg);
             update.Execute(true, true);
