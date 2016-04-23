@@ -27,7 +27,19 @@ var appState: IAppStateConfig = {
                 }
             },
             dependencies: [
-                './components/home/home.controller'
+                'components/home/home.controller'
+            ],
+            allowAnonymous: true
+        },
+        'app.login': {
+            url: '/login',
+            views: {
+                'main': {
+                    template: '<login></login>'
+                }
+            },
+            dependencies: [
+                'components/login/login.controller'
             ],
             allowAnonymous: true
         },
