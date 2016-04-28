@@ -1,19 +1,47 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
     <div class="container-fluid">
+
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-                <span class="sr-only">开关导航</span>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">打开关闭导航栏</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#/">AngularJS App</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li ui-sref-active="active">
+                    <a ui-sref="app.home">
+                        <i class="fa fa-home fa-fw"></i> 首页
+                    </a>
+                </li>
+            </ul>
+
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/user"><span class="glyphicon glyphicon-user"></span> User</a></li>
-                <li><a href="/help"><span class="glyphicon glyphicon-question-sign"></span> Help</a></li>
+                <li ng-if="!$root.userInfo.authorized">
+                    <a href="#/login">登录</a>
+                </li>
+                <li class="dropdown" uib-dropdown ng-if="$ctrl.userInfo.authorized">
+                    <a role="button" class="dropdown-toggle" uib-dropdown-toggle>
+                        <i class="fa fa-user fa-fw"></i> {{$root.userInfo.name}}
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu" uib-dropdown-menu>
+                        <li>
+                            <a href="#/user/info"><i class="fa fa-user fa-fw"></i> 用户信息</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a ng-click="$ctrl.logout()"><i class="fa fa-sign-out"></i> 注销</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
+
 </nav>

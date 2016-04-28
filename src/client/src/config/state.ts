@@ -31,18 +31,6 @@ var appState: IAppStateConfig = {
             ],
             allowAnonymous: true
         },
-        'app.login': {
-            url: '/login',
-            views: {
-                'main': {
-                    template: '<login></login>'
-                }
-            },
-            dependencies: [
-                'components/login/login.controller'
-            ],
-            allowAnonymous: true
-        },
         'admin': {
             url: '/admin',
             templateUrl: 'components/layout/admin-layout.view.html',
@@ -67,7 +55,15 @@ var appState: IAppStateConfig = {
                 'components/users/user-list.controller'
             ],
             allowAnonymous: false
-        }
+        },
+        'login': {
+            url: '/login',
+            template: '<login></login>',
+            dependencies: [
+                'components/login/login.controller'
+            ],
+            allowAnonymous: true
+        },
     }
 };
 
