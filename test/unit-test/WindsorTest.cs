@@ -13,7 +13,8 @@ namespace UnitTest {
         public virtual void Setup() {
             Container = new WindsorContainer();
             Container.Install(
-                Configuration.FromXmlFile("windsor.config")
+                Configuration.FromXmlFile("windsor.config"),
+                FromAssembly.Named("Beginor.Owin.Application")
             );
 
             Container.Register(

@@ -159,6 +159,7 @@
     <Compile Include="Security\ISystemRolesFinder.cs" />
     <Compile Include="Security\ReflectionSystemRolesFinder.cs" />
     <Compile Include="Models\ModelMappings.cs" />
+    <Compile Include="Controllers\Installer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
